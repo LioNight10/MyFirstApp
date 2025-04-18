@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.js": "/static/js/main.d0da9244.js",
+    "static/js/932.82dce101.js": "/static/js/932.82dce101.js",
+    "static/media/case1_good.mp4": "/static/media/case1_good.48ac34e97a5100dc75a0.mp4",
+    "static/media/case8_good.mp4": "/static/media/case8_good.64ee965b6d90356f1213.mp4",
+    "static/media/case6_bad.mp4": "/static/media/case6_bad.b8fa4ab996a879612e1c.mp4",
+    "static/media/case5_good.mp4": "/static/media/case5_good.41d2c85f5e3d01b5c862.mp4",
+    "static/media/case4_good.mp4": "/static/media/case4_good.d502608f9d2b4c491c95.mp4",
+    "static/media/case6_good.mp4": "/static/media/case6_good.c4c0fad592421f73489e.mp4",
+    "static/media/case2_good.mp4": "/static/media/case2_good.8df5baed8049b6980080.mp4",
+    "static/media/case5_bad.mp4": "/static/media/case5_bad.2c4c5f9acb153235e39a.mp4",
+    "static/media/case1_bad.mp4": "/static/media/case1_bad.2416f9a4c470777327dc.mp4",
+    "static/media/case4_bad.mp4": "/static/media/case4_bad.dc2872b0cf71b250c397.mp4",
+    "static/media/case7_bad.mp4": "/static/media/case7_bad.9ed89d69ae9c71f56989.mp4",
+    "static/media/case3_bad.mp4": "/static/media/case3_bad.041bc03a770333f70a27.mp4",
+    "static/media/case7_good.mp4": "/static/media/case7_good.f0bf964854ae1349e286.mp4",
+    "static/media/case2_bad.mp4": "/static/media/case2_bad.02fd862ef48d7429064d.mp4",
+    "static/media/case8_bad.mp4": "/static/media/case8_bad.b111b219cd8b6e323e21.mp4",
+    "static/media/case3_good.mp4": "/static/media/case3_good.ee8bbd3c11e9c29d3f37.mp4",
+    "static/media/case1.png": "/static/media/case1.121632faad9573787830.png",
+    "static/media/case5.png": "/static/media/case5.18ef3186018f93808f4f.png",
+    "static/media/case6.png": "/static/media/case6.3a3845ac27bef4e2ef19.png",
+    "static/media/case3.png": "/static/media/case3.69484f877a12c4cd7889.png",
+    "static/media/case4.png": "/static/media/case4.288162ae3ce6db0a8ac1.png",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.9b6b1954a5eb6efeaf11.ttf",
+    "static/media/case7.png": "/static/media/case7.f9eee5760064c3e8589b.png",
+    "static/media/case2.png": "/static/media/case2.c54b82d49933dcaf37e6.png",
+    "favicon.ico": "/favicon.ico",
+    "static/media/case8.png": "/static/media/case8.4397208ed364ee37eb4f.png",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "favicon-16.png": "/favicon-16.png",
+    "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
+    "main.d0da9244.js.map": "/static/js/main.d0da9244.js.map",
+    "932.82dce101.js.map": "/static/js/932.82dce101.js.map"
+  },
+  "entrypoints": [
+    "static/js/932.82dce101.js",
+    "static/js/main.d0da9244.js"
+  ]
+}
