@@ -5,9 +5,6 @@ import { Video } from 'expo-av';
 import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
-import { WebView } from 'react-native-webview';
-import { YouTubePlayer } from './components/YouTubePlayer';
-
 
 const storyData = {
   norwegian: {
@@ -41,14 +38,34 @@ const storyData = {
       ],
     },
     "Case 1 Video Good": {
-      videoType: "YouTubePlayer", // Ensure this is set correctly
-      videoId: "hdmTCIejM6A", // Ensure this is a valid YouTube video ID
-      explanation: "Good choice! Wearing a seatbelt reduces the risk of serious injury in an accident. Visit https://www.ungitrafikken.no/kollisjonskalkulator to learn more.",
+      video: require('./assets/case1_good.mp4'),
+      explanation: (
+        <Text>
+          Godt valg! Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+              if (Platform.OS === 'web') {
+                // Open the link in a new tab for web
+                window.open(url, '_blank');
+              } else {
+                // Use Linking for mobile
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://www.ungitrafikken.no/kollisjonskalkulator
+          </Text>{' '}
+          og se hva dine krefter tilsvarer i en hastighet på 60 km/t. Vil du bruke bilbeltet? Du kan også bli straffet med forenklet forelegg i henhold til paragraf §1 (forskrift om bruk av bilbelte mv, 1979 §1).
+        </Text>
+      ),
       next: "Case 2",
     },
     "Case 1 Video Bad": {
-      videoType: "youtube",
-      videoId: "ZM64tWkpFRI",
+      video: require('./assets/case1_bad.mp4'),
       explanation: "Dårlig valg. Å ikke bruke bilbelte kan føre til alvorlige skader eller dødsfall i en ulykke.",
       next: "Case 2",
     },
@@ -203,41 +220,39 @@ const storyData = {
     },
     "Case 1": {
       text: "Just a short trip to the store, and sitting in the back seat. What do you do?",
-      image: require('./assets/case1.png'), // Correctly reference the image
+      image: require('./assets/case1.png'),
       choices: [
         { text: "Put on the seatbelt", next: "Case 1 Video Good" },
         { text: "Don't put on the seatbelt", next: "Case 1 Video Bad" },
       ],
     },
     "Case 1 Video Good": {
-      videoType: "youtube",
-      videoId: "hdmTCIejM6A",
-      explanation: "Good choice! Wearing a seatbelt reduces the risk of serious injury in an accident. Visit https://www.ungitrafikken.no/kollisjonskalkulator to learn more.",
-      next: "Case 2",
+      video: require('./assets/case1_good.mp4'),
+      explanation: "Good choice! Wearing a seatbelt reduces the risk of serious injury in an accident.",
+      next: "Case 2", // Skip explanation and go directly to Case 2
     },
     "Case 1 Video Bad": {
-      videoType: "youtube",
-      videoId: "ZM64tWkpFRI",
+      video: require('./assets/case1_bad.mp4'),
       explanation: "Bad choice. Not wearing a seatbelt can lead to serious injury or death in an accident.",
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
     "Case 2": {
       text: "You see a red light at the intersection. What do you do?",
-      image: require('./assets/case2.png'), // Correctly reference the image
+      image: require('./assets/case2.png'),
       choices: [
         { text: "Stop", next: "Case 2 Video Good" },
         { text: "Run the red light", next: "Case 2 Video Bad" },
       ],
     },
     "Case 2 Video Good": {
-      video: require('./assets/case2_good.mp4'), // Correctly reference the video
+      video: require('./assets/case2_good.mp4'),
       explanation: "Good choice! Stopping at a red light prevents accidents.",
-      next: "Case 3",
+      next: "Case 3", // Skip explanation and go directly to Case 3
     },
     "Case 2 Video Bad": {
-      video: require('./assets/case2_bad.mp4'), // Correctly reference the video
+      video: require('./assets/case2_bad.mp4'),
       explanation: "Bad choice. Running a red light can lead to serious accidents.",
-      next: "Case 3",
+      next: "Case 3", // Skip explanation and go directly to Case 3
     },
     "Case 3": {
       text: "You encounter a pedestrian crossing the road. What do you do?",
@@ -383,31 +398,25 @@ const App = () => {
     console.log("Theme changed to:", theme); // Debugging log
   }, [theme]);
 
-  useEffect(() => {
-    console.log("Story data:", storyData); // Debug log
-  }, []);
-
   const handleChoice = (next) => {
-    console.log("Navigating to:", next); // Debug log
+    // Normal progression logic for other cases
+    setHistory((prevHistory) => [...prevHistory, currentCase]);
+
+    setChoices((prevChoices) => {
+      const filteredChoices = prevChoices.filter((choice) => choice.case !== currentCase);
+      const updatedChoices = [...filteredChoices, { case: currentCase, next }];
+      console.log("Updated choices:", updatedChoices); // Debugging log
+      return updatedChoices;
+    });
+
     const caseData = storyData[language][next];
-    console.log("Case data for next:", caseData); // Debug log
-  
-    if (!caseData) {
-      console.error("No data found for case:", next);
-      return;
-    }
-  
-    if (caseData.video || (caseData.videoType === "youtube" && caseData.videoId)) {
-      console.log("Setting showVideo to true"); // Debug log
+    if (caseData && caseData.video) {
       setShowVideo(true);
     } else {
-      console.log("Setting showVideo to false"); // Debug log
       setShowVideo(false);
     }
-  
     setCurrentCase(next);
   };
-  
 
   const handleVideoStatusUpdate = (status) => {
     if (status.didJustFinish) {
@@ -503,18 +512,15 @@ const App = () => {
   
 
   const renderContent = () => {
+    if (currentCase === "end") {
+      return renderEndScreen();
+    }
+
     const caseData = storyData[language][currentCase];
-
-    console.log("Current case:", currentCase); // Debug log
-    console.log("Case data:", caseData); // Debug log
-
-    if (!caseData || !caseData.text) {
-      console.error("Missing or invalid case data:", currentCase, caseData); // Debug log
+    if (!caseData) {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>
-            {language === "norwegian" ? "Ingen data tilgjengelig" : "No data available"}
-          </Text>
+          <Text style={styles.title}>No data available</Text>
         </View>
       );
     }
@@ -606,17 +612,7 @@ const App = () => {
             />
           </View>
         )}
-        {caseData.videoType === "youtube" && caseData.videoId && showVideo && (
-          <WebView
-            style={{ height: 200, width: "100%" }}
-            source={{ uri: `https://www.youtube.com/embed/${caseData.videoId}` }} // Use dynamic videoId
-            allowsFullscreenVideo={true}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-          />
-        )}
-
-        {caseData.videoType !== "youtube" && caseData.video && showVideo && (
+        {caseData.video && showVideo && (
           <View style={styles.videoContainer}>
             <Video
               source={caseData.video}
@@ -631,22 +627,7 @@ const App = () => {
         )}
         {caseData.explanation && !showVideo && (
           <View style={styles.card}>
-            <Text style={styles.info}>
-              {caseData.explanation.split(" ").map((word, index) => {
-                if (word.startsWith("http")) {
-                  return (
-                    <Text
-                      key={index}
-                      style={{ color: "blue", textDecorationLine: "underline" }}
-                      onPress={() => Linking.openURL(word)}
-                    >
-                      {word}{" "}
-                    </Text>
-                  );
-                }
-                return word + " ";
-              })}
-            </Text>
+            <Text style={styles.info}>{caseData.explanation}</Text>
           </View>
         )}
         <View style={styles.buttonRow}>
