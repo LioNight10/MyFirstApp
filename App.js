@@ -5,6 +5,55 @@ import { Video } from 'expo-av';
 import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
+import { WebView } from 'react-native-webview';
+import { YouTubePlayer } from './components/YouTubePlayer';
+
+const YouTubePlayer = ({ videoId }) => {
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+  if (Platform.OS === 'web') {
+    return (
+      <View style={styles.container}>
+        <iframe
+          width="100%"
+          height="315"
+          src={embedUrl}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </View>
+    );
+  }
+
+  return (
+    <WebView
+      style={styles.webview}
+      javaScriptEnabled
+      domStorageEnabled
+      source={{ uri: embedUrl }}
+    />
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    maxWidth: 800,
+    height: 315,
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  webview: {
+    width: '100%',
+    height: 315,
+    marginVertical: 20,
+  },
+});
+
+export { YouTubePlayer };
+
 
 const storyData = {
   norwegian: {
@@ -65,7 +114,7 @@ const storyData = {
       next: "Case 2",
     },
     "Case 1 Video Bad": {
-      video: require('./assets/case1_bad.mp4'),
+      videoId: "ZM64tWkpFRI",
       explanation: "Dårlig valg. Å ikke bruke bilbelte kan føre til alvorlige skader eller dødsfall i en ulykke.",
       next: "Case 2",
     },
