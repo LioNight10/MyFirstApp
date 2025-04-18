@@ -2,12 +2,18 @@ import { StatusBar } from 'expo-status-bar'; // Only used if you explicitly need
 import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
-import { Dimensions } from 'react-native-web';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
-import { Dimensions as RNDimensions, Platform } from 'react-native';
+import { Dimensions as RNDimensions } from 'react-native'; // Renamed to avoid conflict
 
-const Dimensions = Platform.OS === 'web' ? { width: window.innerWidth, height: window.innerHeight } : RNDimensions.get('window');
+// Conditionally assign Dimensions based on the platform
+let Dimensions;
+if (Platform.OS === 'web') {
+  Dimensions = { width: window.innerWidth, height: window.innerHeight }; // For web, use window dimensions directly
+} else {
+  Dimensions = RNDimensions.get('window'); // For native, use react-native's Dimensions API
+}
 
+// Lock screen orientation to portrait for non-web platforms
 if (Platform.OS !== 'web') {
   import('expo-screen-orientation').then(ScreenOrientation => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
