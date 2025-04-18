@@ -6,6 +6,20 @@ import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
 
+const VideoPlayer = ({ videoName }) => {
+  const videoUrl = `/videos/${videoName}`; // Reference to video inside the 'public/videos' folder
+
+  return (
+    <div>
+      <video width="100%" height="auto" controls>
+        <source src={videoUrl} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  );
+};
+
+
 const storyData = {
   norwegian: {
     welcome: {
