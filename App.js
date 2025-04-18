@@ -2,13 +2,12 @@ import { StatusBar } from 'expo-status-bar'; // Only used if you explicitly need
 import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
-import { Dimensions } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
-import { Platform } from 'react-native';
 
 if (Platform.OS !== 'web') {
-  const ScreenOrientation = require('expo-screen-orientation');
-  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  import('expo-screen-orientation').then(ScreenOrientation => {
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  });
 }
 
 const storyData = {
