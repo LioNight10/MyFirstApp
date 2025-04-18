@@ -5,7 +5,9 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/web-build/$1"
+      "dest": "/dist/$1"
     }
-  ]
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
