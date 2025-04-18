@@ -3,8 +3,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pre
 import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { Dimensions } from 'react-native';
-import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
+import { Platform } from 'react-native';
+
+if (Platform.OS !== 'web') {
+  const ScreenOrientation = require('expo-screen-orientation');
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+}
 
 const storyData = {
   norwegian: {
