@@ -8,52 +8,6 @@ import { Ionicons } from "@expo/vector-icons"; // Import icons
 import { WebView } from 'react-native-webview';
 import { YouTubePlayer } from './components/YouTubePlayer';
 
-const YouTubePlayer = ({ videoId }) => {
-  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-
-  if (Platform.OS === 'web') {
-    return (
-      <View style={styles.container}>
-        <iframe
-          width="100%"
-          height="315"
-          src={embedUrl}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </View>
-    );
-  }
-
-  return (
-    <WebView
-      style={styles.webview}
-      javaScriptEnabled
-      domStorageEnabled
-      source={{ uri: embedUrl }}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    maxWidth: 800,
-    height: 315,
-    alignSelf: 'center',
-    marginVertical: 20,
-  },
-  webview: {
-    width: '100%',
-    height: 315,
-    marginVertical: 20,
-  },
-});
-
-export { YouTubePlayer };
-
 
 const storyData = {
   norwegian: {
@@ -87,7 +41,7 @@ const storyData = {
       ],
     },
     "Case 1 Video Good": {
-      video: require('./assets/case1_good.mp4'),
+      videoId: "hdmTCIejM6A",
       explanation: (
         <Text>
           Godt valg! Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
