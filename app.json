@@ -22,7 +22,15 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "build": {
+        "babel": {
+          "include": [
+            "react-native-web"
+          ]
+        }
+      },
+      "platforms": ["ios", "android", "web"]  // Make sure to include web here
     }
   }
 }

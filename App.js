@@ -4,6 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
 
+// Conditionally import Dimensions based on the platform
+let Dimensions;
+if (Platform.OS === 'web') {
+  Dimensions = require('react-native-web').Dimensions;
+} else {
+  Dimensions = require('react-native').Dimensions;
+}
+
+// Lock screen orientation to portrait for non-web platforms
 if (Platform.OS !== 'web') {
   import('expo-screen-orientation').then(ScreenOrientation => {
     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
