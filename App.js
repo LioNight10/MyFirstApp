@@ -6,19 +6,48 @@ import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
 
-const VideoPlayer = ({ videoName }) => {
-  const videoUrl = `/videos/${videoName}`; // Reference to video inside the 'public/videos' folder
-
+const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
   return (
-    <div>
-      <video width="100%" height="auto" controls>
-        <source src={videoUrl} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
+    <View style={styles.videoContainer}>
+      {Platform.OS === "web" ? (
+        <video
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain", // Ensure the video scales proportionally
+          }}
+          controls
+          autoPlay // Enable autoplay
+          muted // Mute the video to allow autoplay on web
+        >
+          <source src={videoSource} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      ) : (
+        <>
+          <Video
+            source={videoSource}
+            style={styles.video}
+            useNativeControls
+            resizeMode="contain" // Ensure the video scales proportionally on mobile
+            isLooping={false}
+            shouldPlay={true}
+          />
+        </>
+      )}
+      <TouchableOpacity
+        style={styles.hideVideoButton}
+        onPress={onHideVideo}
+      >
+        <Text style={styles.hideVideoButtonText}>
+          {Platform.OS === "ios" || Platform.OS === "android"
+            ? "Skjul video"
+            : "Hide Video"}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
-
 
 const storyData = {
   norwegian: {
@@ -61,7 +90,7 @@ Lykke til!`,
       video: require('./assets/case1_good.mp4'),
       explanation: (
         <Text>
-          Godt valg! Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
+        Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
@@ -86,7 +115,29 @@ Lykke til!`,
     },
     "Case 1 Video Bad": {
       video: require('./assets/case1_bad.mp4'),
-      explanation: "Dårlig valg. Å ikke bruke bilbelte kan føre til alvorlige skader eller dødsfall i en ulykke.",
+      explanation: (
+        <Text>
+          Godt valg! Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+              if (Platform.OS === 'web') {
+                // Open the link in a new tab for web
+                window.open(url, '_blank');
+              } else {
+                // Use Linking for mobile
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://www.ungitrafikken.no/kollisjonskalkulator
+          </Text>{' '}
+          og se hva dine krefter tilsvarer i en hastighet på 60 km/t. Vil du bruke bilbeltet? Du kan også bli straffet med forenklet forelegg i henhold til paragraf §1 (forskrift om bruk av bilbelte mv, 1979 §1).
+        </Text>
+      ),
       next: "Case 2",
     },
     "Case 2": {
@@ -438,12 +489,50 @@ Good luck!`,
     },
     "Case 1 Video Good": {
       video: require('./assets/case1_good.mp4'),
-      explanation: "Good choice! Wearing a seatbelt reduces the risk of serious injury in an accident.",
+      explanation: (
+        <Text>
+It is always advisable to wear a seatbelt. Even if you're just going on a short trip to the store, the car will reach a speed of 60 kilometers per hour. If you get into a collision, your body weight will correspond to 1.2 tons of force at the moment of impact. How do you think it will affect your friend in the front passenger seat? Visit{' '}
+<Text
+  style={{ color: 'blue', textDecorationLine: 'underline' }}
+  onPress={() => {
+    const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+    if (Platform.OS === 'web') {
+      window.open(url, '_blank');
+    } else {
+      Linking.openURL(url).catch((err) =>
+        console.error("Failed to open URL:", err)
+      );
+    }
+  }}
+>
+  https://www.ungitrafikken.no/kollisjonskalkulator
+</Text>{' '}
+to see what your forces correspond to at a speed of 60 km/h. Would you wear a seatbelt? You can also be fined with a simplified penalty according to §1 (Regulations on the use of seatbelts, 1979 §1).        </Text>
+      ),
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
     "Case 1 Video Bad": {
       video: require('./assets/case1_bad.mp4'),
-      explanation: "Bad choice. Not wearing a seatbelt can lead to serious injury or death in an accident.",
+      explanation: (
+        <Text>
+It is always advisable to wear a seatbelt. Even if you're just going on a short trip to the store, the car will reach a speed of 60 kilometers per hour. If you get into a collision, your body weight will correspond to 1.2 tons of force at the moment of impact. How do you think it will affect your friend in the front passenger seat? Visit{' '}
+<Text
+  style={{ color: 'blue', textDecorationLine: 'underline' }}
+  onPress={() => {
+    const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+    if (Platform.OS === 'web') {
+      window.open(url, '_blank');
+    } else {
+      Linking.openURL(url).catch((err) =>
+        console.error("Failed to open URL:", err)
+      );
+    }
+  }}
+>
+  https://www.ungitrafikken.no/kollisjonskalkulator
+</Text>{' '}
+to see what your forces correspond to at a speed of 60 km/h. Would you wear a seatbelt? You can also be fined with a simplified penalty according to §1 (Regulations on the use of seatbelts, 1979 §1).        </Text>
+      ),
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
     "Case 2": {
@@ -783,8 +872,6 @@ Good luck!`,
   },
 };
 
-// Removed duplicate declaration of App
-
 const App = () => {
   const [theme, setTheme] = useState("light"); // Default to light mode
   const [currentCase, setCurrentCase] = useState("welcome");
@@ -794,6 +881,7 @@ const App = () => {
   const [orientation, setOrientation] = useState('PORTRAIT');
   const [history, setHistory] = useState([]);
   const [choices, setChoices] = useState([]);
+  const [preloadedVideos, setPreloadedVideos] = useState({}); // Store preloaded video objects
 
   const { width, height } = screenDimensions;
   const styles = getStyles(width, height, orientation, theme);
@@ -816,16 +904,32 @@ const App = () => {
     console.log("Theme changed to:", theme); // Debugging log
   }, [theme]);
 
-  const handleChoice = (next) => {
-    // Normal progression logic for other cases
-    setHistory((prevHistory) => [...prevHistory, currentCase]);
+  const preloadVideos = async (caseData) => {
+    if (!caseData || !caseData.choices) return;
 
-    setChoices((prevChoices) => {
-      const filteredChoices = prevChoices.filter((choice) => choice.case !== currentCase);
-      const updatedChoices = [...filteredChoices, { case: currentCase, next }];
-      console.log("Updated choices:", updatedChoices); // Debugging log
-      return updatedChoices;
+    const videoPromises = caseData.choices.map(async (choice) => {
+      const nextCase = storyData[language][choice.next];
+      if (nextCase && nextCase.video) {
+        const videoObject = new Video();
+        await videoObject.loadAsync(nextCase.video);
+        return { [choice.next]: videoObject };
+      }
+      return null;
     });
+
+    const loadedVideos = await Promise.all(videoPromises);
+    const videoMap = loadedVideos.reduce((acc, video) => {
+      if (video) {
+        return { ...acc, ...video };
+      }
+      return acc;
+    }, {});
+
+    setPreloadedVideos((prev) => ({ ...prev, ...videoMap }));
+  };
+
+  const handleChoice = async (next) => {
+    setHistory((prevHistory) => [...prevHistory, currentCase]);
 
     const caseData = storyData[language][next];
     if (caseData && caseData.video) {
@@ -833,7 +937,11 @@ const App = () => {
     } else {
       setShowVideo(false);
     }
+
     setCurrentCase(next);
+
+    // Preload videos for the next case
+    await preloadVideos(caseData);
   };
 
   const handleVideoStatusUpdate = (status) => {
@@ -1051,15 +1159,7 @@ const App = () => {
         )}
         {caseData.video && showVideo && (
           <View style={styles.videoContainer}>
-            <Video
-              source={caseData.video}
-              style={styles.video}
-              useNativeControls
-              resizeMode="contain"
-              isLooping={false}
-              shouldPlay={true}
-              onPlaybackStatusUpdate={handleVideoStatusUpdate}
-            />
+            <VideoPlayer videoSource={caseData.video} styles={styles} onHideVideo={() => setShowVideo(false)} />
           </View>
         )}
         {caseData.explanation && !showVideo && (
@@ -1172,15 +1272,17 @@ const getStyles = (width, height, orientation, theme) => {
     },
     contentContainer: {
       flex: 1,
-      justifyContent: "space-evenly",
+      justifyContent: "flex-start", // Align content to the top
       alignItems: "center",
+      paddingTop: orientation === "PORTRAIT" ? height * 0.1 : height * 0.05, // Add padding at the top
     },
     centeredContainer: {
       flex: 1,
-      justifyContent: "center", // Center vertically
-      alignItems: "center", // Center horizontally
-      backgroundColor: theme === "light" ? "#F5F5F5" : "#181818", // Match the theme
+      justifyContent: "flex-start", // Align content to the top
+      alignItems: "center",
+      backgroundColor: theme === "light" ? "#F5F5F5" : "#181818",
       padding: width * 0.03,
+      paddingTop: orientation === "PORTRAIT" ? height * 0.1 : height * 0.05, // Add padding at the top
     },
     card: {
       backgroundColor: theme === "light" ? "white" : "#242424",
@@ -1193,6 +1295,7 @@ const getStyles = (width, height, orientation, theme) => {
       elevation: 5,
       width: "90%",
       alignItems: "center",
+      marginTop: orientation === "PORTRAIT" ? height * 0.05 : height * 0.02, // Add margin to push the card down
     },
     title: {
       fontSize: Math.min(width, height) * 0.035,
@@ -1208,10 +1311,10 @@ const getStyles = (width, height, orientation, theme) => {
       marginBottom: height * 0.01, // Reduced margin
     },
     caseText: {
-      fontSize: Math.min(width, height) * 0.03, // Smaller case text
+      fontSize: Math.min(width, height) * 0.03, // Adjust font size dynamically
       textAlign: "center",
-      color: theme === "light" ? "#444" : "#DDDDDD", // Lighter text for dark mode
-      marginBottom: height * 0.01, // Reduced margin
+      color: theme === "light" ? "#444" : "#DDDDDD", // Adjust text color based on theme
+      marginBottom: orientation === "PORTRAIT" ? height * 0.005 : height * 0.01, // Reduce margin in portrait mode
     },
     imageContainer: {
       width: "100%",
@@ -1226,16 +1329,16 @@ const getStyles = (width, height, orientation, theme) => {
       resizeMode: "contain", // Ensure the image scales proportionally
     },
     videoContainer: {
-      width: "100%",
+      width: "100%", // Full width of the screen
+      height: orientation === "LANDSCAPE" ? "100%" : height * 0.5, // Adjust height based on orientation
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: height * 0.015, // Reduced margin
+      backgroundColor: "black", // Ensure a black background for the video
     },
     video: {
-      width: "100%", // Full width for video
-      aspectRatio: 16 / 9,
-      borderRadius: 10,
-      backgroundColor: "black",
+      width: "100%", // Full width of the container
+      height: "100%", // Full height of the container
+      objectFit: "contain", // Ensure the video scales proportionally
     },
     buttonRow: {
       flexDirection: "row",
@@ -1353,6 +1456,21 @@ const getStyles = (width, height, orientation, theme) => {
       fontSize: 16,
       textAlign: "center",
       color: theme === "light" ? "#333" : "#FFFFFF",
+    },
+    hideVideoButton: {
+      position: "absolute",
+      bottom: 10, // Position the button at the bottom
+      left: 10, // Position the button at the left
+      backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent black background
+      paddingVertical: 8,
+      paddingHorizontal: 12,
+      borderRadius: 5,
+      zIndex: 10, // Ensure the button is above the video
+    },
+    hideVideoButtonText: {
+      color: "white", // White text for visibility
+      fontSize: 14,
+      fontWeight: "bold",
     },
   });
 };
