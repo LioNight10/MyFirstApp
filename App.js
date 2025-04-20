@@ -24,7 +24,13 @@ const storyData = {
   norwegian: {
     welcome: {
       text: "Velkommen til 'Konsekvens i trafikken'!",
-      info: "Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender. Trykk på 'Start' for å begynne.",
+      info: `Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.
+      
+Brukerveiledning: Du vil bli presentert ulike caser hvor du skal velge den påstanden du mener er riktig. For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. 
+Trykk på informasjonsboksen for hver case etter at du har valgt din påstand og sett tilsvarende video.
+Det anbefales å spille spillet to ganger, andre gangen velger du motsatt påstand av første gang.
+Ønsker du kun å se på en case av gangen? Trykk på knappen «casene». 
+Lykke til!`,
       choices: [
         { text: "Start", next: "Case 1" },
         { text: "Casene", next: "caseOverview" }, // Navigate to case overview
@@ -84,7 +90,7 @@ const storyData = {
       next: "Case 2",
     },
     "Case 2": {
-      text: "Du kjører den svarte bilen på en parkeringsplass og du oppdager en rød bil ryggende. Hva gjør du?",
+      text: "Du (grønn ring) kjører på en travel parkeringsplass og du oppdager en ryggende bil (rød ring). Hva gjør du?",
       image: require('./assets/case2.png'),
       choices: [
         { text: "Stanser for bilen", next: "Case 2 Video Good" },
@@ -93,16 +99,54 @@ const storyData = {
     },
     "Case 2 Video Good": {
       video: require('./assets/case2_good.mp4'),
-      explanation: "Godt valg! Å stoppe på rødt lys forhindrer ulykker.",
+      explanation: (
+        <Text>
+          Ved rygging har ryggende vikeplikt for annen trafikk i henhold til trafikkreglene, (trafikkreglene, 1996, §11). Til tross for dette kan det ifølge grunnregelen vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3) være hensiktsmessig å slippe ut den røde bilen. Hva mener du kan være grunnen til dette? Se lenke:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+          </Text>
+        </Text>
+      ),
       next: "Case 3",
     },
     "Case 2 Video Bad": {
       video: require('./assets/case2_bad.mp4'),
-      explanation: "Dårlig valg. Å kjøre på rødt lys kan føre til alvorlige ulykker.",
+      explanation: (
+        <Text>
+          Ved rygging har ryggende vikeplikt for annen trafikk i henhold til trafikkreglene, (trafikkreglene, 1996, §11). Å ikke slippe ut den røde bilen kan føre til unødvendige konflikter eller farlige situasjoner. Hva kunne du gjort annerledes? Se lenke:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+          </Text>
+        </Text>
+      ),
       next: "Case 3",
     },
     "Case 3": {
-      text: "Passering av buss. Hva gjør du?",
+      text: "Du skal passere en buss på holdeplass. Hva gjør du?",
       image: require('./assets/case3.png'),
       choices: [
         { text: "Jeg reduserer farten og inntar bremseberedskap", next: "Case 3 Video Good" },
@@ -111,16 +155,54 @@ const storyData = {
     },
     "Case 3 Video Good": {
       video: require('./assets/case3_good.mp4'),
-      explanation: "Godt valg! Å la fotgjengere krysse er trygt og påbudt ved lov.",
+      explanation: (
+        <Text>
+          Ifølge trafikreglenes § 13.Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss (trafikkregler, 1986, §13). Se lenke:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
       next: "Case 4",
     },
     "Case 3 Video Bad": {
       video: require('./assets/case3_bad.mp4'),
-      explanation: "Dårlig valg. Å ignorere fotgjengere kan føre til ulykker.",
+      explanation: (
+        <Text>
+          Ifølge trafikreglenes § 13.Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss (trafikkregler, 1986, §13). Se lenke:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
       next: "Case 4",
     },
     "Case 4": {
-      text: "Du kjører den røde bilen og oppdager den svarte bilen i ett kryss. Hva gjør du?",
+      text: "Du kjører den røde bilen (grønn ring) og oppdager en bil i ett kryss (rød sirkel). Hva gjør du?",
       image: require('./assets/case4.png'),
       choices: [
         { text: "Jeg slipper gasspedalen og lar bilen passere", next: "Case 4 Video Good" },
@@ -129,16 +211,56 @@ const storyData = {
     },
     "Case 4 Video Good": {
       video: require('./assets/case4_good.mp4'),
-      explanation: "Godt valg! Å senke farten i regn reduserer risikoen for å miste kontrollen.",
+      explanation: (
+        <Text>
+          I følge trafikkreglenes §7 om vikeplikt har du i dette tilfelle vikeplikt da den svarte bilen kommer fra din høyre side så det sikreste valget blir i dette tilfelle å senke farten og la bilen passere. I tillegg står det i trafikkreglene at den som har vikeplikt skal vise dette tydelig og i god tid ved å senke farten eller stanse (trafikkregler, 1986, §7). Les mer på lovdata om §7:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+          {' '}Hva kunne konsekvensene ha vært dersom den svarte bilen hadde hatt for høy fart?
+        </Text>
+      ),
       next: "Case 5",
     },
     "Case 4 Video Bad": {
       video: require('./assets/case4_bad.mp4'),
-      explanation: "Dårlig valg. Å øke farten i regn kan føre til farlige situasjoner.",
+      explanation: (
+        <Text>
+          I følge trafikkreglenes §7 om vikeplikt har du i dette tilfelle vikeplikt da den svarte bilen kommer fra din høyre side så det sikreste valget blir i dette tilfelle å senke farten og la bilen passere. I tillegg står det i trafikkreglene at den som har vikeplikt skal vise dette tydelig og i god tid ved å senke farten eller stanse (trafikkregler, 1986, §7). Les mer på lovdata om §7:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+          {' '}Hva kunne konsekvensene ha vært dersom den svarte bilen hadde hatt for høy fart?
+        </Text>
+      ),
       next: "Case 5",
     },
     "Case 5": {
-      text: "Du kommer kjørende og oppdager en fotgjenger et stykke unna et gangfelt. Hva gjør du?",
+      text: "Du kommer kjørende (grønn ring) og oppdager en fotgjenger (rød ring) et stykke unna ved et gangfelt. Hva gjør du?",
       image: require('./assets/case5.png'),
       choices: [
         { text: "Jeg senker farten", next: "Case 5 Video Good" },
@@ -147,16 +269,54 @@ const storyData = {
     },
     "Case 5 Video Good": {
       video: require('./assets/case5_good.mp4'),
-      explanation: "Godt valg! Helping others in need is important and can save lives.",
-      next: "Case 6", // Progress to Case 6
+      explanation: (
+        <Text>
+          I følge § 9. «Særlige plikter overfor gående» har kjørende vikeplikt for gående som er på vei ut i gangfeltet (trafikkregler, 1986, §9). Til tross for at føreren ikke kan vite med sikkerhet om den gående skal krysse veien, har dessuten ikke bilføreren lov til å stanse i gangfeltet eller forstyrre den gående slik det kan oppfattes hvis farten ikke tidlig reduseres. Les mer på lovdata om §9:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 6",
     },
     "Case 5 Video Bad": {
       video: require('./assets/case5_bad.mp4'),
-      explanation: "Bad choice. Ignoring others in need can lead to serious consequences.",
-      next: "Case 6", // Progress to Case 6
+      explanation: (
+        <Text>
+          I følge § 9. «Særlige plikter overfor gående» har kjørende vikeplikt for gående som er på vei ut i gangfeltet (trafikkregler, 1986, §9). Til tross for at føreren ikke kan vite med sikkerhet om den gående skal krysse veien, har dessuten ikke bilføreren lov til å stanse i gangfeltet eller forstyrre den gående slik det kan oppfattes hvis farten ikke tidlig reduseres. Les mer på lovdata om §9:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 6",
     },
     "Case 6": {
-      text: "Du skal på trening og har parkert på en parkeringsplass og skal gå over veien. Hva gjør du?",
+      text: "Du skal på trening og har parkert på en parkeringsplass. Du har forlatt bilen (grønn ring) og skal gå over parkeringsplassen (grønn pil). Hva gjør du?",
       image: require('./assets/case6.png'),
       choices: [
         { text: "Søker kontakt med passerende biler", next: "Case 6 Video Good" },
@@ -165,16 +325,24 @@ const storyData = {
     },
     "Case 6 Video Good": {
       video: require('./assets/case6_good.mp4'),
-      explanation: "Godt valg! Å senke farten i en skolevei sikrer barnas sikkerhet.",
-      next: "Case 7", // Gå direkte til Case 7
+      explanation: (
+        <Text>
+          I henhold til §3 grunnreglene for trafikk kan det være lurt å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+        </Text>
+      ),
+      next: "Case 7",
     },
     "Case 6 Video Bad": {
       video: require('./assets/case6_bad.mp4'),
-      explanation: "Dårlig valg. Å holde farten i en skolevei kan føre til ulykker.",
-      next: "Case 7", // Gå direkte til Case 7
+      explanation: (
+        <Text>
+          I henhold til §3 grunnreglene for trafikk kan det være lurt å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+        </Text>
+      ),
+      next: "Case 7",
     },
     "Case 7": {
-      text: "Du er på vei til skolen med kameratene dine i bilen. Hva vektlegger du mest?",
+      text: "Du er på vei til skole/jobb med kameratene dine i bilen. Dere kjører på en landevei og det er god stemning i bilen. Hva vektlegger du mest?",
       image: require('./assets/case7.png'),
       choices: [
         { text: "Jeg vektlegger miljøet og behovene rundt", next: "Case 7 Video Good" },
@@ -183,13 +351,35 @@ const storyData = {
     },
     "Case 7 Video Good": {
       video: require('./assets/case7_good.mp4'),
-      explanation: "Godt valg! Å gi syklisten plass sikrer deres sikkerhet på veien.",
-      next: "Case 8", // Updated to go to Case 8
+      explanation: (
+        <Text>
+          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
+          {"\n"}- trafikksikker
+          {"\n"}- gir god samhandling
+          {"\n"}- fører til god trafikkavvikling
+          {"\n"}- tar hensyn til helse, miljø og andres behov
+          {"\n"}- er i samsvar med gjeldende regelverk.
+          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
+          {"\n\n"}Hvordan ønsker du å være som bilfører?
+        </Text>
+      ),
+      next: "Case 8",
     },
     "Case 7 Video Bad": {
       video: require('./assets/case7_bad.mp4'),
-      explanation: "Dårlig valg. Å kjøre forbi en syklist mens de svinger kan føre til ulykker.",
-      next: "Case 8", // Updated to go to Case 8
+      explanation: (
+        <Text>
+          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
+          {"\n"}- trafikksikker
+          {"\n"}- gir god samhandling
+          {"\n"}- fører til god trafikkavvikling
+          {"\n"}- tar hensyn til helse, miljø og andres behov
+          {"\n"}- er i samsvar med gjeldende regelverk.
+          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
+          {"\n\n"}Hvordan ønsker du å være som bilfører?
+        </Text>
+      ),
+      next: "Case 8",
     },
     "Case 8": {
       text: "Du skal parkere. Hva gjør du?",
@@ -213,7 +403,13 @@ const storyData = {
   english: {
     welcome: {
       text: "Welcome to 'Consequences in Traffic'!",
-      info: "This is an interactive game where you make choices in various traffic situations. Your choices affect the story and determine how it ends. Press 'Start' to begin.",
+      info: `This is an interactive game where you make choices in various traffic situations. Your choices affect the story and determine how it ends.
+      
+User Guide: You will be presented with various cases where you must choose the statement you believe is correct. For the game to make sense, it is important that you answer honestly. 
+Click on the information box for each case after you have made your choice and watch the corresponding video.
+It is recommended to play the game twice; the second time, choose the opposite statement from the first time.
+Do you only want to look at one case at a time? Click the "Cases" button. 
+Good luck!`,
       choices: [
         { text: "Start", next: "Case 1" },
         { text: "Cases", next: "caseOverview" }, // Navigate to case overview
@@ -251,112 +447,320 @@ const storyData = {
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
     "Case 2": {
-      text: "You see a red light at the intersection. What do you do?",
+      text: "You (green circle) are driving in a busy parking lot and you notice a reversing car (red circle). What do you do?",
       image: require('./assets/case2.png'),
       choices: [
-        { text: "Stop", next: "Case 2 Video Good" },
-        { text: "Run the red light", next: "Case 2 Video Bad" },
+        { text: "Stop for the car", next: "Case 2 Video Good" },
+        { text: "Drive past the car", next: "Case 2 Video Bad" },
       ],
     },
     "Case 2 Video Good": {
       video: require('./assets/case2_good.mp4'),
-      explanation: "Good choice! Stopping at a red light prevents accidents.",
-      next: "Case 3", // Skip explanation and go directly to Case 3
+      explanation: (
+        <Text>
+          When reversing, the reversing vehicle must yield to other traffic according to traffic rules (trafikkreglene, 1996, §11). Despite this, according to the general rule in vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3), it may be appropriate to let the red car out. What do you think could be the reason for this? See link:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+          </Text>
+        </Text>
+      ),
+      next: "Case 3",
     },
     "Case 2 Video Bad": {
       video: require('./assets/case2_bad.mp4'),
-      explanation: "Bad choice. Running a red light can lead to serious accidents.",
-      next: "Case 3", // Skip explanation and go directly to Case 3
+      explanation: (
+        <Text>
+          When reversing, the reversing vehicle must yield to other traffic according to traffic rules (trafikkreglene, 1996, §11). Despite this, according to the general rule in vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3), it may be appropriate to let the red car out. What do you think could be the reason for this? See link:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+          </Text>
+        </Text>
+      ),
+      next: "Case 3",
     },
     "Case 3": {
-      text: "You encounter a pedestrian crossing the road. What do you do?",
+      text: "You are about to pass a bus at a bus stop. What do you do?",
       image: require('./assets/case3.png'),
       choices: [
-        { text: "Let them cross", next: "Case 3 Video Good" },
-        { text: "Ignore them", next: "Case 3 Video Bad" },
+        { text: "I reduce my speed and prepare to brake", next: "Case 3 Video Good" },
+        { text: "I prepare to brake but maintain the same speed", next: "Case 3 Video Bad" },
       ],
     },
     "Case 3 Video Good": {
       video: require('./assets/case3_good.mp4'),
-      explanation: "Good choice! Letting pedestrians cross is safe and required by law.",
-      next: "Case 4", // Skip explanation and go directly to Case 4
+      explanation: (
+        <Text>
+          According to Traffic Rules § 13.Special provisions on driving speed, it states that "drivers must be able to stop within the distance they can see ahead and in front of any foreseeable obstacle." Additionally, drivers are required to maintain sufficiently low speed when passing, among other things, buses (Traffic Rules, 1986, §13). See link:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 4",
     },
     "Case 3 Video Bad": {
       video: require('./assets/case3_bad.mp4'),
-      explanation: "Bad choice. Ignoring pedestrians can lead to accidents.",
-      next: "Case 4", // Skip explanation and go directly to Case 4
+      explanation: (
+        <Text>
+          According to Traffic Rules § 13.Special provisions on driving speed, it states that "drivers must be able to stop within the distance they can see ahead and in front of any foreseeable obstacle." Additionally, drivers are required to maintain sufficiently low speed when passing, among other things, buses (Traffic Rules, 1986, §13). See link:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 4",
+    },
+    "Case 3 Video Bad (English)": {
+      video: require('./assets/case3_bad.mp4'),
+      explanation: (
+        <Text>
+          According to Traffic Rules § 13.Special provisions on driving speed, it states that "drivers must be able to stop within the distance they can see ahead and in front of any foreseeable obstacle." Not reducing speed when passing a bus can lead to dangerous situations (Traffic Rules, 1986, §13). See link:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 4",
     },
     "Case 4": {
-      text: "You are driving in heavy rain. What do you do?",
+      text: "You are driving the red car (green circle) and notice a car at an intersection (red circle). What do you do?",
       image: require('./assets/case4.png'),
       choices: [
-        { text: "Slow down", next: "Case 4 Video Good" },
-        { text: "Speed up", next: "Case 4 Video Bad" },
+        { text: "I release the gas pedal and let the car pass", next: "Case 4 Video Good" },
+        { text: "I speed up a bit and take the gap", next: "Case 4 Video Bad" },
       ],
     },
     "Case 4 Video Good": {
       video: require('./assets/case4_good.mp4'),
-      explanation: "Good choice! Slowing down in the rain reduces the risk of losing control.",
-      next: "Case 5", // Skip explanation and go directly to Case 5
+      explanation: (
+        <Text>
+          According to Traffic Rules §7 on the right of way, in this case, you must yield as the black car is coming from your right side. The safest choice in this situation is to slow down and let the car pass. Additionally, the traffic rules state that the person who must yield should show this clearly and in good time by slowing down or stopping (Traffic Rules, 1986, §7). Read more on Lovdata about §7:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+          {' '}What could have been the consequences if the black car had been driving too fast?
+        </Text>
+      ),
+      next: "Case 5",
     },
     "Case 4 Video Bad": {
       video: require('./assets/case4_bad.mp4'),
-      explanation: "Bad choice. Speeding up in the rain can lead to dangerous situations.",
-      next: "Case 5", // Skip explanation and go directly to Case 5
+      explanation: (
+        <Text>
+          According to Traffic Rules §7 on the right of way, in this case, you must yield as the black car is coming from your right side. The safest choice in this situation is to slow down and let the car pass. Additionally, the traffic rules state that the person who must yield should show this clearly and in good time by slowing down or stopping (Traffic Rules, 1986, §7). Read more on Lovdata about §7:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+          {' '}What could have been the consequences if the black car had been driving too fast?
+        </Text>
+      ),
+      next: "Case 5",
     },
     "Case 5": {
-      text: "You see a car that has broken down on the road. What do you do?",
+      text: "You are driving (green circle) and notice a pedestrian (red circle) some distance away near a crosswalk. What do you do?",
       image: require('./assets/case5.png'),
       choices: [
-        { text: "Help out", next: "Case 5 Video Good" },
-        { text: "Ignore the car", next: "Case 5 Video Bad" },
+        { text: "I slow down", next: "Case 5 Video Good" },
+        { text: "I maintain speed and prepare to brake", next: "Case 5 Video Bad" },
       ],
     },
     "Case 5 Video Good": {
       video: require('./assets/case5_good.mp4'),
-      explanation: "Good choice! Helping others in need is important and can save lives.",
-      next: "Case 6", // Progress to Case 6
+      explanation: (
+        <Text>
+          According to § 9. "Special duties towards pedestrians," drivers must yield to pedestrians who are about to enter a crosswalk (Traffic Rules, 1986, §9). Even though the driver cannot know for certain if the pedestrian intends to cross, the driver is also not allowed to stop in the crosswalk or disturb the pedestrian, which may be perceived if the speed is not reduced early. Read more on Lovdata about §9:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 6",
     },
     "Case 5 Video Bad": {
       video: require('./assets/case5_bad.mp4'),
-      explanation: "Bad choice. Ignoring others in need can lead to serious consequences.",
-      next: "Case 6", // Progress to Case 6
+      explanation: (
+        <Text>
+          According to § 9. "Special duties towards pedestrians," drivers must yield to pedestrians who are about to enter a crosswalk (Traffic Rules, 1986, §9). Even though the driver cannot know for certain if the pedestrian intends to cross, the driver is also not allowed to stop in the crosswalk or disturb the pedestrian, which may be perceived if the speed is not reduced early. Read more on Lovdata about §9:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+          </Text>
+        </Text>
+      ),
+      next: "Case 6",
     },
     "Case 6": {
-      text: "You are approaching a school zone. What do you do?",
+      text: "You are heading to training and have parked in a parking lot. You have left the car (green circle) and are about to walk across the parking lot (green arrow). What do you do?",
       image: require('./assets/case6.png'),
       choices: [
-        { text: "Slow down", next: "Case 6 Video Good" },
-        { text: "Maintain speed", next: "Case 6 Video Bad" },
+        { text: "Make eye contact with passing cars", next: "Case 6 Video Good" },
+        { text: "Take out your phone and prepare the music", next: "Case 6 Video Bad" },
       ],
     },
     "Case 6 Video Good": {
       video: require('./assets/case6_good.mp4'),
-      explanation: "Good choice! Slowing down in a school zone ensures the safety of children.",
-      next: "Case 7", // Skip explanation and go directly to Case 7
+      explanation: (
+        <Text>
+          According to §3 general traffic rules, it is wise to look carefully and wait to use your mobile phone until you have crossed areas where traffic is expected. Similarly, drivers should also expect that pedestrians may be distracted.
+        </Text>
+      ),
+      next: "Case 7",
     },
     "Case 6 Video Bad": {
       video: require('./assets/case6_bad.mp4'),
-      explanation: "Bad choice. Maintaining speed in a school zone can lead to accidents.",
-      next: "Case 7", // Skip explanation and go directly to Case 7
+      explanation: (
+        <Text>
+          According to §3 general traffic rules, it is wise to look carefully and wait to use your mobile phone until you have crossed areas where traffic is expected. Similarly, drivers should also expect that pedestrians may be distracted.
+        </Text>
+      ),
+      next: "Case 7",
     },
     "Case 7": {
-      text: "You see a cyclist signaling to turn left. What do you do?",
+      text: "You are on your way to school/work with your friends in the car. You are driving on a country road, and the mood in the car is great. What do you prioritize the most?",
       image: require('./assets/case7.png'),
       choices: [
-        { text: "Give way", next: "Case 7 Video Good" },
-        { text: "Overtake the cyclist", next: "Case 7 Video Bad" },
+        { text: "I prioritize the environment and the needs around me", next: "Case 7 Video Good" },
+        { text: "I prioritize speed and excitement", next: "Case 7 Video Bad" },
       ],
     },
     "Case 7 Video Good": {
       video: require('./assets/case7_good.mp4'),
-      explanation: "Good choice! Giving way to cyclists ensures their safety on the road.",
-      next: "Case 8", // Updated to go to Case 8
+      explanation: (
+        <Text>
+          According to the Traffic Training Regulations §11-1. Main goals for class B, the student must be able to drive a car responsibly. It also states that "The student must have the knowledge and skills, self-awareness, and risk understanding necessary to drive in a way that is:
+          {"\n"}- traffic safe
+          {"\n"}- promotes good interaction
+          {"\n"}- ensures smooth traffic flow
+          {"\n"}- considers health, the environment, and the needs of others
+          {"\n"}- complies with current regulations.
+          {"\n"}(Traffic Training Regulations, 2004, §11-1.)
+          {"\n\n"}How do you want to be as a driver?
+        </Text>
+      ),
+      next: "Case 8",
     },
     "Case 7 Video Bad": {
       video: require('./assets/case7_bad.mp4'),
-      explanation: "Bad choice. Overtaking a cyclist while they turn can cause accidents.",
-      next: "Case 8", // Updated to go to Case 8
+      explanation: (
+        <Text>
+          According to the Traffic Training Regulations §11-1. Main goals for class B, the student must be able to drive a car responsibly. It also states that "The student must have the knowledge and skills, self-awareness, and risk understanding necessary to drive in a way that is:
+          {"\n"}- traffic safe
+          {"\n"}- promotes good interaction
+          {"\n"}- ensures smooth traffic flow
+          {"\n"}- considers health, the environment, and the needs of others
+          {"\n"}- complies with current regulations.
+          {"\n"}(Traffic Training Regulations, 2004, §11-1.)
+          {"\n\n"}How do you want to be as a driver?
+        </Text>
+      ),
+      next: "Case 8",
     },
     "Case 8": {
       text: "You see a car driving very slowly in front of you. What do you do?",
@@ -471,19 +875,11 @@ const App = () => {
     });
   
     const goodChoices = Object.values(uniqueChoices).filter((next) => {
-      const caseData = storyData[language][next];
-      if (caseData && typeof caseData.explanation === "string") {
-        const explanation = caseData.explanation.toLowerCase();
-        if (language === "norwegian") {
-          return explanation.includes("godt valg");
-        } else {
-          return explanation.includes("good choice");
-        }
-      }
-      return false; // Skip cases without a valid explanation
+      // Check if the case corresponds to a "Video Good" case
+      return next.includes("Video Good");
     }).length;
   
-    const totalCases = 8;
+    const totalCases = 8; // Total number of cases
     const stars = Math.round((goodChoices / totalCases) * 5);
   
     const endText = language === "norwegian" ? "Spillet er over" : "Game Over";
@@ -491,6 +887,32 @@ const App = () => {
       language === "norwegian"
         ? `Du gjorde ${goodChoices} gode valg av ${totalCases}.`
         : `You made ${goodChoices} good choices out of ${totalCases}.`;
+  
+    // Feedback based on stars
+    const feedback =
+      stars === 5
+        ? language === "norwegian"
+          ? "Fantastisk! Du tok alle de riktige valgene. Du er en mester i trafikksikkerhet! Prøv igjen for å se om du kan gjøre det like bra en gang til!"
+          : "Amazing! You made all the right choices. You're a traffic safety master! Try again to see if you can do just as well one more time!"
+        : stars === 4
+        ? language === "norwegian"
+          ? "Veldig bra! Du gjorde nesten alle riktige valg. Du er så nær perfeksjon! Prøv igjen for å nå toppen!"
+          : "Great job! You made almost all the right choices. You're so close to perfection! Try again to reach the top!"
+        : stars === 3
+        ? language === "norwegian"
+          ? "God innsats! Du gjorde mange gode valg. Du har et godt grunnlag! Prøv igjen for å forbedre deg enda mer!"
+          : "Good effort! You made many good choices. You have a solid foundation! Try again to improve even more!"
+        : stars === 2
+        ? language === "norwegian"
+          ? "Bra jobbet! Du har gjort noen gode valg. Du lærer raskt! Prøv igjen for å se hvor mye bedre du kan bli!"
+          : "Well done! You made some good choices. You're learning quickly! Try again to see how much better you can get!"
+        : stars === 1
+        ? language === "norwegian"
+          ? "God start! Du har tatt noen gode valg. Dette er bare begynnelsen! Prøv igjen for å bygge videre på det du har lært!"
+          : "Good start! You made some good choices. This is just the beginning! Try again to build on what you've learned!"
+        : language === "norwegian"
+        ? "Flott innsats! Dette er en fantastisk mulighet til å lære og vokse. Prøv igjen, og se hvor mye du kan forbedre deg!"
+        : "Great effort! This is a wonderful opportunity to learn and grow. Try again and see how much you can improve!";
   
     return (
       <View style={styles.container}>
@@ -507,6 +929,7 @@ const App = () => {
               </Text>
             ))}
           </View>
+          <Text style={styles.info}>{feedback}</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
