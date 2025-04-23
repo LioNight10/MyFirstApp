@@ -1,39 +1,44 @@
 import { StatusBar } from 'expo-status-bar'; // Only used if you explicitly need the status bar
-import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { Ionicons } from "@expo/vector-icons"; // Import icons
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBAk5JKCIi8vrp8x6d6-hlWdDMEL095-Ko",
+  authDomain: "feedback-spillet.firebaseapp.com",
+  databaseURL: "https://feedback-spillet-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "feedback-spillet",
+  storageBucket: "feedback-spillet.firebasestorage.app",
+  messagingSenderId: "716762882047",
+  appId: "1:716762882047:web:c6382deb261ae2db5e91ca",
+  measurementId: "G-JSCZGRJL4Y"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
   return (
     <View style={styles.videoContainer}>
-      {Platform.OS === "web" ? (
-        <video
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain", // Ensure the video scales proportionally
-          }}
-          controls
-          autoPlay // Enable autoplay
-        >
-          <source src={videoSource} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      ) : (
-        <>
-          <Video
-            source={videoSource}
-            style={styles.video}
-            useNativeControls
-            resizeMode="contain" // Ensure the video scales proportionally on mobile
-            isLooping={false}
-            shouldPlay={true}
-          />
-        </>
-      )}
+      <Video
+        source={videoSource}
+        style={styles.video}
+        useNativeControls
+        resizeMode="contain" // Ensures the video fits within the container
+        isLooping={false}
+        shouldPlay={true}
+        onPlaybackStatusUpdate={(status) => {
+          if (status.didJustFinish) {
+            onHideVideo(); // Automatically hide the video when it finishes
+          }
+        }}
+      />
       <TouchableOpacity
         style={styles.hideVideoButton}
         onPress={onHideVideo}
@@ -54,7 +59,7 @@ const storyData = {
       text: "Velkommen til 'Konsekvens i trafikken'!",
       info: `Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.
       
-Brukerveiledning: Du vil bli presentert ulike caser hvor du skal velge den påstanden du mener er riktig. For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. 
+Brukerveiledning: For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. 
 Trykk på informasjonsboksen for hver case etter at du har valgt din påstand og sett tilsvarende video.
 Det anbefales å spille spillet to ganger, andre gangen velger du motsatt påstand av første gang.
 Ønsker du kun å se på en case av gangen? Trykk på knappen «casene». 
@@ -65,7 +70,7 @@ Lykke til!`,
       ],
     },
     caseOverview: {
-      text: "Velg en sak for å gå direkte til den:",
+      text: "Velg en case for å gå direkte til den:",
       cases: [
         { text: "Case 1", image: require('./assets/case1.png'), next: "Case 1" },
         { text: "Case 2", image: require('./assets/case2.png'), next: "Case 2" },
@@ -78,7 +83,7 @@ Lykke til!`,
       ],
     },
     "Case 1": {
-      text: "Skal bare en kort tur til butikken, og sitte i baksetet. Hva gjør du?",
+      text: "Skal bare en kort tur til butikken. Du sitter i baksetet. Hva gjør du?",
       image: require('./assets/case1.png'),
       choices: [
         { text: "Ta på beltet", next: "Case 1 Video Good" },
@@ -140,7 +145,7 @@ Lykke til!`,
       next: "Case 2",
     },
     "Case 2": {
-      text: "Du (grønn ring) kjører på en travel parkeringsplass og du oppdager en ryggende bil (rød ring). Hva gjør du?",
+      text: "Du (grønn ring) kjører på en travel parkeringsplass og oppdager en ryggende bil (rød ring). Hva gjør du?",
       image: require('./assets/case2.png'),
       choices: [
         { text: "Stanser for bilen", next: "Case 2 Video Good" },
@@ -369,7 +374,7 @@ Lykke til!`,
       text: "Du skal på trening og har parkert på en parkeringsplass. Du har forlatt bilen (grønn ring) og skal gå over parkeringsplassen (grønn pil). Hva gjør du?",
       image: require('./assets/case6.png'),
       choices: [
-        { text: "Søker kontakt med passerende biler", next: "Case 6 Video Good" },
+        { text: "Skaper overblikk over plassen", next: "Case 6 Video Good" },
         { text: "Tar frem mobilen og gjør klar musikken", next: "Case 6 Video Bad" },
       ],
     },
@@ -377,7 +382,7 @@ Lykke til!`,
       video: require('./assets/case6_good.mp4'),
       explanation: (
         <Text>
-          I henhold til §3 grunnreglene for trafikk kan det være lurt å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+          I henhold til §3 grunnreglene for trafikk kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
         </Text>
       ),
       next: "Case 7",
@@ -386,7 +391,7 @@ Lykke til!`,
       video: require('./assets/case6_bad.mp4'),
       explanation: (
         <Text>
-          I henhold til §3 grunnreglene for trafikk kan det være lurt å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+          I henhold til §3 grunnreglene for trafikk kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
         </Text>
       ),
       next: "Case 7",
@@ -872,6 +877,8 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
 };
 
 const App = () => {
+  const [feedback, setFeedback] = useState(""); // State for general feedback
+  const [caseSuggestions, setCaseSuggestions] = useState(""); // State for case suggestions
   const [theme, setTheme] = useState("light"); // Default to light mode
   const [currentCase, setCurrentCase] = useState("welcome");
   const [language, setLanguage] = useState("norwegian");
@@ -881,10 +888,46 @@ const App = () => {
   const [history, setHistory] = useState([]);
   const [choices, setChoices] = useState([]);
   const [preloadedVideos, setPreloadedVideos] = useState({}); // Store preloaded video objects
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
 
   const { width, height } = screenDimensions;
   const styles = getStyles(width, height, orientation, theme);
-  console.log("Current theme:", theme); // Debugging log
+
+  // Define submitFeedback at the top level
+  const submitFeedback = async () => {
+    if (feedback.trim() || caseSuggestions.trim()) {
+      setIsSubmitting(true); // Start submission
+      try {
+        await addDoc(collection(db, "feedback"), {
+          feedback: feedback,
+          caseSuggestions: caseSuggestions,
+          timestamp: new Date(),
+        });
+        alert(
+          language === "norwegian"
+            ? "Takk for tilbakemeldingen! Vi setter pris på din tid."
+            : "Thank you for your feedback! We appreciate your time."
+        );
+        setFeedback(""); // Clear the feedback field
+        setCaseSuggestions(""); // Clear the case suggestions field
+      } catch (error) {
+        console.error("Error submitting feedback:", error);
+        alert(
+          language === "norwegian"
+            ? "Kunne ikke sende tilbakemelding. Prøv igjen senere."
+            : "Could not submit feedback. Please try again later."
+        );
+      } finally {
+        setIsSubmitting(false); // End submission
+      }
+    } else {
+      alert(
+        language === "norwegian"
+          ? "Vennligst skriv noe før du sender."
+          : "Please write something before submitting."
+      );
+    }
+  };
 
   // Handle screen orientation changes
   useEffect(() => {
@@ -973,36 +1016,27 @@ const App = () => {
         </View>
       );
     }
-  
+
     const uniqueChoices = choices.reduce((acc, choice) => {
       acc[choice.case] = choice.next;
       return acc;
     }, {});
-  
-    console.log("Choices state:", choices);
-    console.log("Unique choices:", uniqueChoices);
-  
-    Object.values(uniqueChoices).forEach((next) => {
-      const caseData = storyData[language][next];
-      console.log("Case data for next:", next, caseData);
-    });
-  
+
     const goodChoices = Object.values(uniqueChoices).filter((next) => {
-      // Check if the case corresponds to a "Video Good" case
       return next.includes("Video Good");
     }).length;
-  
+
     const totalCases = 8; // Total number of cases
     const stars = Math.round((goodChoices / totalCases) * 5);
-  
+
     const endText = language === "norwegian" ? "Spillet er over" : "Game Over";
     const resultText =
       language === "norwegian"
         ? `Du gjorde ${goodChoices} gode valg av ${totalCases}.`
         : `You made ${goodChoices} good choices out of ${totalCases}.`;
-  
+
     // Feedback based on stars
-    const feedback =
+    const feedbackText =
       stars === 5
         ? language === "norwegian"
           ? "Fantastisk! Du tok alle de riktige valgene. Du er en mester i trafikksikkerhet! Prøv igjen for å se om du kan gjøre det like bra en gang til!"
@@ -1026,7 +1060,7 @@ const App = () => {
         : language === "norwegian"
         ? "Flott innsats! Dette er en fantastisk mulighet til å lære og vokse. Prøv igjen, og se hvor mye du kan forbedre deg!"
         : "Great effort! This is a wonderful opportunity to learn and grow. Try again and see how much you can improve!";
-  
+
     return (
       <View style={styles.container}>
         <View style={styles.card}>
@@ -1042,7 +1076,7 @@ const App = () => {
               </Text>
             ))}
           </View>
-          <Text style={styles.info}>{feedback}</Text>
+          <Text style={styles.info}>{feedbackText}</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -1059,20 +1093,70 @@ const App = () => {
       </View>
     );
   };
-  
 
   const renderContent = () => {
     if (currentCase === "end") {
       return renderEndScreen();
     }
 
+    if (currentCase === "feedback") {
+      return (
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0} // Adjust offset for iOS
+        >
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <View style={styles.card}>
+              <Text style={styles.title}>
+                {language === "norwegian" ? "Tilbakemelding" : "Feedback"}
+              </Text>
+              <TextInput
+                style={styles.feedbackInput}
+                placeholder={
+                  language === "norwegian"
+                    ? "Skriv generelle tilbakemeldinger her..."
+                    : "Write general feedback here..."
+                }
+                placeholderTextColor="#888"
+                value={feedback}
+                onChangeText={setFeedback}
+                multiline
+              />
+              <TextInput
+                style={styles.feedbackInput}
+                placeholder={
+                  language === "norwegian"
+                    ? "Skriv forslag til nye cases her..."
+                    : "Write suggestions for new cases here..."
+                }
+                placeholderTextColor="#888"
+                value={caseSuggestions}
+                onChangeText={setCaseSuggestions}
+                multiline
+              />
+              <TouchableOpacity style={styles.button} onPress={submitFeedback}>
+                <Text style={styles.buttonText}>
+                  {language === "norwegian" ? "Send tilbakemelding" : "Submit Feedback"}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.goBackButton]}
+                onPress={() => setCurrentCase("welcome")}
+              >
+                <Text style={styles.buttonText}>
+                  {language === "norwegian" ? "Gå tilbake" : "Go Back"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      );
+    }
+
     const caseData = storyData[language][currentCase];
     if (!caseData) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.title}>No data available</Text>
-        </View>
-      );
+      return null; // Ensure no rendering errors occur
     }
 
     // Render the welcome slide
@@ -1245,19 +1329,45 @@ const App = () => {
     <View style={{ flex: 1, backgroundColor: theme === "light" ? "#F5F5F5" : "#121212" }}>
       <StatusBar style="auto" />
 
+      {/* Home Button */}
+      <Pressable
+        style={styles.homeButton}
+        onPress={() => setCurrentCase("welcome")} // Navigate to the home menu
+      >
+        <Ionicons
+          name="home" // House icon
+          size={24}
+          color={theme === "light" ? "#333" : "#FFD700"} // Adjust color based on theme
+        />
+      </Pressable>
+
       {/* Theme Toggle Button */}
       <Pressable
         style={styles.themeToggleButton}
         onPress={() => {
           const newTheme = theme === "light" ? "dark" : "light";
-          console.log("Switching to theme:", newTheme); // Debugging log
           setTheme(newTheme);
         }}
       >
         <Ionicons
-          name={theme === "light" ? "moon" : "sunny"} // Moon for light mode, Sun for dark mode
+          name={theme === "light" ? "moon" : "sunny"}
           size={24}
-          color={theme === "light" ? "#333" : "#FFD700"} // Icon color
+          color={theme === "light" ? "#333" : "#FFD700"}
+        />
+      </Pressable>
+
+      {/* Feedback Button */}
+      <Pressable
+        style={styles.feedbackButton}
+        onPress={() => {
+          // Navigate to the feedback section or open a modal
+          setCurrentCase("feedback");
+        }}
+      >
+        <Ionicons
+          name="chatbubble-ellipses" // Feedback icon
+          size={24}
+          color={theme === "light" ? "#333" : "#FFD700"} // Adjust color based on theme
         />
       </Pressable>
 
@@ -1334,16 +1444,16 @@ const getStyles = (width, height, orientation, theme) => {
       resizeMode: "contain", // Ensure the image scales proportionally
     },
     videoContainer: {
+      flex: 1, // Allow the container to take up available space
       width: "100%", // Full width of the screen
-      height: orientation === "LANDSCAPE" ? "100%" : height * 0.5, // Adjust height based on orientation
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "black", // Ensure a black background for the video
+      backgroundColor: "black", // Black background for better visibility
     },
     video: {
       width: "100%", // Full width of the container
       height: "100%", // Full height of the container
-      objectFit: "contain", // Ensure the video scales proportionally
+      resizeMode: "cover", // Ensure the video fills the container while maintaining aspect ratio
     },
     buttonRow: {
       flexDirection: "row",
@@ -1439,6 +1549,34 @@ const getStyles = (width, height, orientation, theme) => {
       elevation: 3,
       zIndex: 10, // Ensure the button is on top of other elements
     },
+    homeButton: {
+      position: "absolute",
+      top: 20, // Position at the top
+      left: 20, // Position at the left
+      backgroundColor: theme === "light" ? "#FFFFFF" : "#444444", // Adjust background color based on theme
+      borderRadius: 25,
+      padding: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 3,
+      zIndex: 10, // Ensure the button is on top of other elements
+    },
+    feedbackButton: {
+      position: "absolute",
+      bottom: 20, // Position at the top
+      right: 60, // Position to the left of the theme toggle button
+      backgroundColor: theme === "light" ? "#FFFFFF" : "#444444", // Adjust background color based on theme
+      borderRadius: 25,
+      padding: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 3,
+      zIndex: 10, // Ensure the button is on top of other elements
+    },
     caseOverviewContainer: {
       flexDirection: "row",
       flexWrap: "wrap",
@@ -1476,6 +1614,39 @@ const getStyles = (width, height, orientation, theme) => {
       color: "white", // White text for visibility
       fontSize: 14,
       fontWeight: "bold",
+    },
+    feedbackInput: {
+      width: "90%",
+      height: 100,
+      borderColor: "#ccc",
+      borderWidth: 1,
+      borderRadius: 10,
+      padding: 10,
+      marginVertical: 10,
+      backgroundColor: theme === "light" ? "#FFFFFF" : "#333333",
+      color: theme === "light" ? "#000000" : "#FFFFFF",
+      textAlignVertical: "top", // Align text to the top
+    },
+    feedbackReminderContainer: {
+      position: "absolute",
+      bottom: 80, // Position above the feedback button
+      right: 20, // Align with the feedback button
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+      padding: 10,
+      borderRadius: 10,
+      zIndex: 10, // Ensure it appears above other elements
+    },
+    feedbackReminderText: {
+      color: "white", // White text for visibility
+      fontSize: 14,
+      fontWeight: "bold",
+      marginBottom: 5, // Space above the arrow
+    },
+    scrollContainer: {
+      flexGrow: 1,
+      justifyContent: "center",
+      alignItems: "center",
     },
   });
 };
