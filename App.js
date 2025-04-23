@@ -18,7 +18,6 @@ const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
           }}
           controls
           autoPlay // Enable autoplay
-          muted // Mute the video to allow autoplay on web
         >
           <source src={videoSource} type="video/mp4" />
           Your browser does not support the video tag.
@@ -930,6 +929,12 @@ const App = () => {
 
   const handleChoice = async (next) => {
     setHistory((prevHistory) => [...prevHistory, currentCase]);
+
+    // Add the current choice to the choices array
+    setChoices((prevChoices) => [
+      ...prevChoices,
+      { case: currentCase, next },
+    ]);
 
     const caseData = storyData[language][next];
     if (caseData && caseData.video) {
