@@ -28,9 +28,9 @@ const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
     <View style={styles.videoContainer}>
       <Video
         source={videoSource}
-        style={styles.video}
+        style={styles.video} // Use the updated style
         useNativeControls
-        resizeMode="contain" // Ensures the video fits within the container
+        resizeMode="contain" // Ensure the video fits within the container
         isLooping={false}
         shouldPlay={true}
         onPlaybackStatusUpdate={(status) => {
@@ -59,11 +59,12 @@ const storyData = {
       text: "Velkommen til 'Konsekvens i trafikken'!",
       info: `Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.
       
-Brukerveiledning: For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. 
-Trykk på informasjonsboksen for hver case etter at du har valgt din påstand og sett tilsvarende video.
-Det anbefales å spille spillet to ganger, andre gangen velger du motsatt påstand av første gang.
-Ønsker du kun å se på en case av gangen? Trykk på knappen «casene». 
-Lykke til!`,
+Brukerveiledning: For at spillet skal gi mening, er det viktig at du svarer ærlig.
+Når du har valgt en påstand og sett videoen som hører til, trykker du på infoboksen for å få mer info om casen.
+Vi anbefaler at du spiller gjennom to ganger – andre gangen velger du motsatt påstand av det du gjorde første gang.
+Vil du ta én case om gangen? Trykk på «Casene»-knappen.
+
+Lykke til – og ha det gøy!`,
       choices: [
         { text: "Start", next: "Case 1" },
         { text: "Casene", next: "caseOverview" }, // Navigate to case overview
@@ -257,7 +258,7 @@ Lykke til!`,
       next: "Case 4",
     },
     "Case 4": {
-      text: "Du kjører den røde bilen (grønn ring) og oppdager en bil i ett kryss (rød sirkel). Hva gjør du?",
+      text: "Du kjører den røde bilen (grønn ring) og oppdager en bil i ett kryss (rød ring). Hva gjør du?",
       image: require('./assets/case4.png'),
       choices: [
         { text: "Jeg slipper gasspedalen og lar bilen passere", next: "Case 4 Video Good" },
@@ -1288,7 +1289,7 @@ const App = () => {
               }}
             >
               <Text style={styles.buttonText}>
-                {language === "norwegian" ? "Neste sak" : "Next Case"}
+                {language === "norwegian" ? "Neste case" : "Next Case"}
               </Text>
             </TouchableOpacity>
           )}
@@ -1378,6 +1379,9 @@ const App = () => {
 };
 
 const getStyles = (width, height, orientation, theme) => {
+  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+  const isWeb = Platform.OS === "web";
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -1444,16 +1448,12 @@ const getStyles = (width, height, orientation, theme) => {
       resizeMode: "contain", // Ensure the image scales proportionally
     },
     videoContainer: {
-      flex: 1, // Allow the container to take up available space
+      justifyContent: "center", // Center the video vertically
+      alignItems: "center", // Center the video horizontally
+      backgroundColor: theme === "light" ? "#F5F5F5" : "#181818", // Match the app's background color
       width: "100%", // Full width of the screen
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "black", // Black background for better visibility
-    },
-    video: {
-      width: "100%", // Full width of the container
-      height: "100%", // Full height of the container
-      resizeMode: "cover", // Ensure the video fills the container while maintaining aspect ratio
+      aspectRatio: 16 / 9, // Maintain a 16:9 aspect ratio
+      overflow: "hidden", // Ensure no content spills outside the container
     },
     buttonRow: {
       flexDirection: "row",
@@ -1647,6 +1647,11 @@ const getStyles = (width, height, orientation, theme) => {
       flexGrow: 1,
       justifyContent: "center",
       alignItems: "center",
+    },
+    video: {
+      width: "100%", // Full width of the container
+      height: "100%", // Full height of the container
+      resizeMode: "cover", // Ensure the video fills the container completely
     },
   });
 };
