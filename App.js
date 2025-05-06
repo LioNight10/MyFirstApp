@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'; // Only used if you explicitly need the status bar
-import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Linking, Platform, Pressable, TextInput, KeyboardAvoidingView, ScrollView, Modal } from 'react-native'; // Add Modal to imports
 import React, { useState, useEffect } from 'react';
 import { Video } from 'expo-av';
 import { Dimensions } from 'react-native';
@@ -29,7 +29,7 @@ const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
       <Video
         source={videoSource}
         style={styles.video}
-        useNativeControls
+        useNativeControls={true}
         resizeMode="contain" // Ensures the video fits within the container
         isLooping={false}
         shouldPlay={true}
@@ -37,6 +37,9 @@ const VideoPlayer = ({ videoSource, styles, onHideVideo }) => {
           if (status.didJustFinish) {
             onHideVideo(); // Automatically hide the video when it finishes
           }
+        }}
+        onReadyForDisplay={videoData => {
+          videoData.srcElement.style.position = "initial"
         }}
       />
       <TouchableOpacity
@@ -402,31 +405,33 @@ const storyData = {
       next: "Case 7",
     },
     "Case 7": {
-      text: "Du er på vei til skole/jobb med kameratene dine i bilen. Dere kjører på en landevei og det er god stemning i bilen. Hva vektlegger du mest?",
+      text: "Du skal parkere. Hva gjør du?",
       image: require('./assets/case7.png'),
       choices: [
-        { text: "Jeg vektlegger miljøet og behovene rundt", next: "Case 7 Video Good" },
-        { text: "Jeg vektlegger fremkommelighet og spenning", next: "Case 7 Video Bad" },
+        { text: "Bruker litt ekstra tid for å rygge inn", next: "Case 7 Video Good" },
+        { text: "Bruker kort tid og kjører rett inn", next: "Case 7 Video Bad" },
       ],
     },
     "Case 7 Video Good": {
       video: require('./assets/case7_good.mp4'),
-      explanation: (
-        <Text>
-          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
-          {"\n"}- trafikksikker
-          {"\n"}- gir god samhandling
-          {"\n"}- fører til god trafikkavvikling
-          {"\n"}- tar hensyn til helse, miljø og andres behov
-          {"\n"}- er i samsvar med gjeldende regelverk.
-          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
-          {"\n\n"}Hvordan ønsker du å være som bilfører?
-        </Text>
-      ),
+      explanation: "Det kan være hensiktsmessig å rygge inn på parkeringsplasser. En får bedre oversikt på vei ut når man skal kjøre ut i trafikken igjen, dessuten er det mindre trafikk der du skal rygge når en rygger inn. ",
       next: "Case 8",
     },
     "Case 7 Video Bad": {
       video: require('./assets/case7_bad.mp4'),
+      explanation: "Det kan være hensiktsmessig å rygge inn på parkeringsplasser. En får bedre oversikt på vei ut når man skal kjøre ut i trafikken igjen, dessuten er det mindre trafikk der du skal rygge når en rygger inn. ",
+      next: "Case 8",
+    },
+    "Case 8": {
+      text: "Du er på vei til skole/jobb med kameratene dine i bilen. Dere kjører på en landevei og det er god stemning i bilen. Hva vektlegger du mest?",
+      image: require('./assets/case8.png'),
+      choices: [
+        { text: "Jeg vektlegger miljøet og behovene rundt", next: "Case 8 Video Good" },
+        { text: "Jeg vektlegger fremkommelighet og spenning", next: "Case 8 Video Bad" },
+      ],
+    },
+    "Case 8 Video Good": {
+      video: require('./assets/case8_good.mp4'),
       explanation: (
         <Text>
           Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
@@ -439,24 +444,22 @@ const storyData = {
           {"\n\n"}Hvordan ønsker du å være som bilfører?
         </Text>
       ),
-      next: "Case 8",
-    },
-    "Case 8": {
-      text: "Du skal parkere. Hva gjør du?",
-      image: require('./assets/case8.png'),
-      choices: [
-        { text: "Bruker litt ekstra tid for å rygge inn", next: "Case 8 Video Good" },
-        { text: "Bruker kort tid og kjører rett inn", next: "Case 8 Video Bad" },
-      ],
-    },
-    "Case 8 Video Good": {
-      video: require('./assets/case8_good.mp4'),
-      explanation: "Godt valg! Å holde avstand sikrer tryggheten for alle på veien.",
       next: "end",
     },
     "Case 8 Video Bad": {
       video: require('./assets/case8_bad.mp4'),
-      explanation: "Dårlig valg. Å kjøre forbi kan føre til farlige situasjoner.",
+      explanation: (
+        <Text>
+          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
+          {"\n"}- trafikksikker
+          {"\n"}- gir god samhandling
+          {"\n"}- fører til god trafikkavvikling
+          {"\n"}- tar hensyn til helse, miljø og andres behov
+          {"\n"}- er i samsvar med gjeldende regelverk.
+          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
+          {"\n\n"}Hvordan ønsker du å være som bilfører?
+        </Text>
+      ),
       next: "end",
     },
   },
@@ -866,21 +869,21 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       next: "Case 8",
     },
     "Case 8": {
-      text: "You see a car driving very slowly in front of you. What do you do?",
+      text: "You're going to park. What do you do?",
       image: require('./assets/case8.png'),
       choices: [
-        { text: "Keep your distance", next: "Case 8 Video Good" },
-        { text: "Overtake the car", next: "Case 8 Video Bad" },
+        { text: "Use a bit of extra time to reverse in.", next: "Case 8 Video Good" },
+        { text: "Use little time and drives straight in", next: "Case 8 Video Bad" },
       ],
     },
     "Case 8 Video Good": {
       video: require('./assets/case8_good.mp4'),
-      explanation: "Good choice! Keeping your distance ensures safety for everyone on the road.",
+      explanation: "It can be practical to reverse into parking spaces. You get a better view when driving out into traffic again, and there is also less traffic in the area where you're reversing when you back in.",
       next: "end", // Leads to the end
     },
     "Case 8 Video Bad": {
       video: require('./assets/case8_bad.mp4'),
-      explanation: "Bad choice. Overtaking can lead to dangerous situations.",
+      explanation: "It can be practical to reverse into parking spaces. You get a better view when driving out into traffic again, and there is also less traffic in the area where you're reversing when you back in.",
       next: "end", // Leads to the end
     },
   },
@@ -899,6 +902,7 @@ const App = () => {
   const [choices, setChoices] = useState([]);
   const [preloadedVideos, setPreloadedVideos] = useState({}); // Store preloaded video objects
   const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
+  const [isQrVisible, setIsQrVisible] = useState(false); // State for QR code visibility
 
   const { width, height } = screenDimensions;
   const styles = getStyles(width, height, orientation, theme);
@@ -1100,6 +1104,18 @@ const App = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
+        {/* New Feedback Reminder */}
+        <View style={styles.feedbackReminderContainer}>
+          <Text style={styles.feedbackReminderText}>
+            {language === "norwegian"
+              ? "Ikke glem å legge igjen en tilbakemelding"
+              : "Don't forget to leave a feedback"}
+          </Text>
+          <View style={styles.arrowContainer}>
+            <Text style={styles.arrow}>↓</Text> {/* Diagonal arrow pointing to the feedback icon */}
+          </View>
+        </View>
       </View>
     );
   };
@@ -1189,6 +1205,7 @@ const App = () => {
             </View>
             {/* Add "Change Language" button */}
             <TouchableOpacity
+            
               style={[styles.button, styles.smallButton]}
               onPress={() => setLanguage(language === "norwegian" ? "english" : "norwegian")}
             >
@@ -1196,6 +1213,28 @@ const App = () => {
                 {language === "norwegian" ? "Change to English" : "Bytt til Norsk"}
               </Text>
             </TouchableOpacity>
+          </View>
+
+          {/* Feedback Reminder on Welcome Page */}
+          <View style={styles.feedbackReminderContainer}>
+            <Text style={styles.feedbackReminderText}>
+              {language === "norwegian"
+                ? "Ikke glem å legge igjen en tilbakemelding"
+                : "Don't forget to leave a feedback"}
+            </Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>↓</Text> {/* Arrow pointing to the feedback icon */}
+            </View>
+          </View>
+
+          {/* QR Code Reminder on Welcome Page */}
+          <View style={styles.qrReminderContainer}>
+            <Text style={styles.qrReminderText}>
+              {language === "norwegian" ? "QR-kode" : "QR-code"}
+            </Text>
+            <View style={styles.arrowContainer}>
+              <Text style={styles.arrow}>↓</Text> {/* Arrow pointing to the QR code icon */}
+            </View>
           </View>
         </View>
       );
@@ -1381,6 +1420,47 @@ const App = () => {
         />
       </Pressable>
 
+      {/* QR Code Icon */}
+      <Pressable
+        style={styles.qrButton}
+        onPress={() => setIsQrVisible(true)} // Show the QR code pop-up
+      >
+        <Ionicons
+          name="qr-code" // QR code icon
+          size={24}
+          color={theme === "light" ? "#333" : "#FFD700"} // Adjust color based on theme
+        />
+      </Pressable>
+
+      {/* QR Code Pop-Up */}
+      <Modal
+        visible={isQrVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setIsQrVisible(false)} // Close the pop-up
+      >
+        <View style={styles.qrModalContainer}>
+          <View style={styles.qrModal}>
+            <Text style={styles.qrModalText}>
+              {language === "norwegian" ? "Skann QR-koden med kameraet for å åpne" : "Scan the QR code with the camera to open"}
+            </Text>
+            <Image
+              source={require('./assets/qr-code.png')} // Replace with your QR code image
+              style={styles.qrImage}
+              resizeMode="contain"
+            />
+            <TouchableOpacity
+              style={styles.qrCloseButton}
+              onPress={() => setIsQrVisible(false)} // Close the pop-up
+            >
+              <Text style={styles.qrCloseButtonText}>
+                {language === "norwegian" ? "Lukk" : "Close"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       {/* Render the rest of the app */}
       {renderContent()}
     </View>
@@ -1389,6 +1469,57 @@ const App = () => {
 
 const getStyles = (width, height, orientation, theme) => {
   return StyleSheet.create({
+    // ...existing styles...
+
+    qrButton: {
+      position: "absolute",
+      bottom: 20, // Position at the bottom
+      left: 20, // Position at the left
+      backgroundColor: theme === "light" ? "#FFFFFF" : "#444444", // Adjust background color based on theme
+      borderRadius: 25,
+      padding: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 3,
+      zIndex: 10, // Ensure the button is on top of other elements
+    },
+    qrModalContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    },
+    qrModal: {
+      width: "80%",
+      backgroundColor: theme === "light" ? "#FFFFFF" : "#333333",
+      borderRadius: 15,
+      padding: 20,
+      alignItems: "center",
+    },
+    qrModalText: {
+      fontSize: 16,
+      color: theme === "light" ? "#333" : "#FFFFFF",
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    qrImage: {
+      width: "90%", // Increase the width to 90% of the modal's width
+      height: 800, // Increase the height to make the QR code larger
+      marginBottom: 20,
+    },
+    qrCloseButton: {
+      backgroundColor: theme === "light" ? "#2196F3" : "#BB86FC",
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 25,
+    },
+    qrCloseButtonText: {
+      color: "#FFFFFF",
+      fontSize: 16,
+      fontWeight: "bold",
+    },
     container: {
       flex: 1,
       justifyContent: "center",
@@ -1454,16 +1585,16 @@ const getStyles = (width, height, orientation, theme) => {
       resizeMode: "contain", // Ensure the image scales proportionally
     },
     videoContainer: {
-      flex: 1, // Allow the container to take up available space
       width: "100%", // Full width of the screen
+      height: Math.min(width * (9 / 16), height * 0.8), // Maintain 16:9 aspect ratio, cap at 90% of window height
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "black", // Black background for better visibility
+      overflow: "hidden", // Prevent content from overflowing
     },
     video: {
       width: "100%", // Full width of the container
       height: "100%", // Full height of the container
-      resizeMode: "cover", // Ensure the video fills the container while maintaining aspect ratio
+      resizeMode: "cover", // Ensure the video scales proportionally to fit within the container
     },
     buttonRow: {
       flexDirection: "row",
@@ -1639,24 +1770,50 @@ const getStyles = (width, height, orientation, theme) => {
     },
     feedbackReminderContainer: {
       position: "absolute",
-      bottom: 80, // Position above the feedback button
-      right: 20, // Align with the feedback button
-      alignItems: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
-      padding: 10,
-      borderRadius: 10,
-      zIndex: 10, // Ensure it appears above other elements
+      bottom: 80, // Adjust position to align with the feedback icon
+      right: 80, // Adjust position to align with the feedback icon
+      alignItems: "flex-end", // Align text and arrow to the right
     },
     feedbackReminderText: {
-      color: "white", // White text for visibility
-      fontSize: 14,
-      fontWeight: "bold",
+      fontFamily: "IndieFlower-Regular", // Use the Indie Flower font
+      fontSize: 24, // Larger font size for better visibility
+      fontWeight: "bold", // Make the text bold
+      color: theme === "light" ? "#FF4500" : "#FFD700", // Bright orange for light mode, gold for dark mode
+      textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow
+      textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+      textShadowRadius: 4, // Shadow blur radius
       marginBottom: 5, // Space above the arrow
+    },
+    arrowContainer: {
+      alignItems: "flex-end", // Align the arrow to the right
+    },
+    arrow: {
+      fontSize: 40, // Larger font size for the arrow
+      color: theme === "light" ? "#FF4500" : "#FFD700", // Match the text color
+      textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow to the arrow
+      textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+      textShadowRadius: 4, // Shadow blur radius
     },
     scrollContainer: {
       flexGrow: 1,
       justifyContent: "center",
       alignItems: "center",
+    },
+    qrReminderContainer: {
+      position: "absolute",
+      bottom: 120, // Adjust position to align above the QR code icon
+      left: 40, // Align with the QR code icon
+      alignItems: "flex-start", // Align text and arrow to the left
+    },
+    qrReminderText: {
+      fontFamily: "IndieFlower-Regular", // Use the Indie Flower font
+      fontSize: 24, // Same font size as the feedback reminder
+      fontWeight: "bold", // Make the text bold
+      color: theme === "light" ? "#FF4500" : "#FFD700", // Match the feedback reminder color
+      textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow
+      textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+      textShadowRadius: 4, // Shadow blur radius
+      marginBottom: 5, // Space above the arrow
     },
   });
 };
