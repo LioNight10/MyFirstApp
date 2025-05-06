@@ -63,7 +63,7 @@ const storyData = {
       info: (
         <Text>
           Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.{"\n\n"}
-          <Text style={{ fontWeight: "bold", color: "#333" }}>
+          <Text style={{ fontWeight: "bold"}}>
             Brukerveiledning:
           </Text>{" "}
           <Text>
@@ -1776,7 +1776,7 @@ const getStyles = (width, height, orientation, theme) => {
     },
     feedbackReminderText: {
       fontFamily: "IndieFlower-Regular", // Use the Indie Flower font
-      fontSize: 24, // Larger font size for better visibility
+      fontSize: Math.min(width, height) * 0.03, // Scale font size dynamically
       fontWeight: "bold", // Make the text bold
       color: theme === "light" ? "#FF4500" : "#FFD700", // Bright orange for light mode, gold for dark mode
       textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow
@@ -1788,7 +1788,7 @@ const getStyles = (width, height, orientation, theme) => {
       alignItems: "flex-end", // Align the arrow to the right
     },
     arrow: {
-      fontSize: 40, // Larger font size for the arrow
+      fontSize: Math.min(width, height) * 0.05, // Scale arrow size dynamically
       color: theme === "light" ? "#FF4500" : "#FFD700", // Match the text color
       textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow to the arrow
       textShadowOffset: { width: 2, height: 2 }, // Shadow offset
@@ -1801,13 +1801,13 @@ const getStyles = (width, height, orientation, theme) => {
     },
     qrReminderContainer: {
       position: "absolute",
-      bottom: 120, // Adjust position to align above the QR code icon
+      bottom: 80, // Adjust position to align above the QR code icon
       left: 40, // Align with the QR code icon
       alignItems: "flex-start", // Align text and arrow to the left
     },
     qrReminderText: {
       fontFamily: "IndieFlower-Regular", // Use the Indie Flower font
-      fontSize: 24, // Same font size as the feedback reminder
+      fontSize: Math.min(width, height) * 0.03, // Scale font size dynamically
       fontWeight: "bold", // Make the text bold
       color: theme === "light" ? "#FF4500" : "#FFD700", // Match the feedback reminder color
       textShadowColor: "rgba(0, 0, 0, 0.5)", // Add a subtle shadow
