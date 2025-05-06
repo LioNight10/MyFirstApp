@@ -57,13 +57,18 @@ const storyData = {
   norwegian: {
     welcome: {
       text: "Velkommen til 'Konsekvens i trafikken'!",
-      info: `Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.
-      
-Brukerveiledning: For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. 
-Trykk på informasjonsboksen for hver case etter at du har valgt din påstand og sett tilsvarende video.
-Det anbefales å spille spillet to ganger, andre gangen velger du motsatt påstand av første gang.
-Ønsker du kun å se på en case av gangen? Trykk på knappen «casene». 
-Lykke til!`,
+      info: (
+        <Text>
+          Dette er et interaktivt spill hvor du tar valg i ulike trafikksituasjoner. Valgene dine påvirker historien og avgjør hvordan det ender.{"\n\n"}
+          <Text style={{ fontWeight: "bold", color: "#333" }}>
+            Brukerveiledning:
+          </Text>{" "}
+          <Text>
+            For at spillet skal kunne føre til mening er det viktig at du svarer på en ærlig måte. Trykk på informasjonsboksen for hver case etter at du har valgt din påstand og sett tilsvarende video. Det anbefales å spille spillet to ganger; andre gangen velger du motsatt påstand av første gang. Ønsker du kun å se på en case av gangen? Trykk på knappen «casene».{"\n\n"}
+          </Text>
+          Lykke til!
+        </Text>
+      ),
       choices: [
         { text: "Start", next: "Case 1" },
         { text: "Casene", next: "caseOverview" }, // Navigate to case overview
@@ -458,13 +463,18 @@ Lykke til!`,
   english: {
     welcome: {
       text: "Welcome to 'Consequences in Traffic'!",
-      info: `This is an interactive game where you make choices in various traffic situations. Your choices affect the story and determine how it ends.
-      
-User Guide: You will be presented with various cases where you must choose the statement you believe is correct. For the game to make sense, it is important that you answer honestly. 
-Click on the information box for each case after you have made your choice and watch the corresponding video.
-It is recommended to play the game twice; the second time, choose the opposite statement from the first time.
-Do you only want to look at one case at a time? Click the "Cases" button. 
-Good luck!`,
+      info: (
+        <Text>
+          This is an interactive game where you make choices in various traffic situations. Your choices affect the story and determine how it ends.{"\n\n"}
+          <Text style={{ fontWeight: "bold", color: "#333" }}>
+            User Guide:
+          </Text>{" "}
+          <Text>
+            You will be presented with various cases where you must choose the statement you believe is correct. For the game to make sense, it is important that you answer honestly. Click on the information box for each case after you have made your choice and watch the corresponding video. It is recommended to play the game twice; the second time, choose the opposite statement from the first time. Do you only want to look at one case at a time? Click the "Cases" button.{"\n\n"}
+          </Text>
+          Good luck!
+        </Text>
+      ),
       choices: [
         { text: "Start", next: "Case 1" },
         { text: "Cases", next: "caseOverview" }, // Navigate to case overview
