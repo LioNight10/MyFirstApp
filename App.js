@@ -1444,11 +1444,13 @@ const App = () => {
             <Text style={styles.qrModalText}>
               {language === "norwegian" ? "Skann QR-koden med kameraet for å åpne" : "Scan the QR code with the camera to open"}
             </Text>
-            <Image
-              source={require('./assets/qr-code.png')} // Replace with your QR code image
-              style={styles.qrImage}
-              resizeMode="contain"
-            />
+            <View style={styles.qrCodeWrapper}>
+              <Image
+                source={require('./assets/qr-code.png')} // Replace with your QR code image
+                style={styles.qrImage}
+                resizeMode="contain"
+              />
+            </View>
             <TouchableOpacity
               style={styles.qrCloseButton}
               onPress={() => setIsQrVisible(false)} // Close the pop-up
@@ -1492,11 +1494,13 @@ const getStyles = (width, height, orientation, theme) => {
       backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
     },
     qrModal: {
-      width: "80%",
+      width: "90%", // Adjust width to fit the screen
+      maxWidth: 400, // Set a maximum width for larger screens
       backgroundColor: theme === "light" ? "#FFFFFF" : "#333333",
       borderRadius: 15,
       padding: 20,
       alignItems: "center",
+      justifyContent: "center", // Center content inside the modal
     },
     qrModalText: {
       fontSize: 16,
@@ -1504,16 +1508,22 @@ const getStyles = (width, height, orientation, theme) => {
       marginBottom: 20,
       textAlign: "center",
     },
+    qrCodeWrapper: {
+      width: "100%", // Ensure the QR code takes up the full width of the modal
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: 20, // Add space below the QR code
+    },
     qrImage: {
-      width: "90%", // Increase the width to 90% of the modal's width
-      height: 800, // Increase the height to make the QR code larger
-      marginBottom: 20,
+      width: "80%", // Adjust the size of the QR code
+      aspectRatio: 1, // Maintain a square aspect ratio
     },
     qrCloseButton: {
       backgroundColor: theme === "light" ? "#2196F3" : "#BB86FC",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 25,
+      alignSelf: "center", // Center the button
     },
     qrCloseButtonText: {
       color: "#FFFFFF",
@@ -1707,7 +1717,7 @@ const getStyles = (width, height, orientation, theme) => {
     feedbackButton: {
       position: "absolute",
       bottom: 20, // Position at the top
-      right: 60, // Position to the left of the theme toggle button
+      right: 20, // Position to the left of the theme toggle button
       backgroundColor: theme === "light" ? "#FFFFFF" : "#444444", // Adjust background color based on theme
       borderRadius: 25,
       padding: 10,
@@ -1771,7 +1781,7 @@ const getStyles = (width, height, orientation, theme) => {
     feedbackReminderContainer: {
       position: "absolute",
       bottom: 80, // Adjust position to align with the feedback icon
-      right: 80, // Adjust position to align with the feedback icon
+      right: 20, // Adjust position to align with the feedback icon
       alignItems: "flex-end", // Align text and arrow to the right
     },
     feedbackReminderText: {
@@ -1802,7 +1812,7 @@ const getStyles = (width, height, orientation, theme) => {
     qrReminderContainer: {
       position: "absolute",
       bottom: 80, // Adjust position to align above the QR code icon
-      left: 40, // Align with the QR code icon
+      left: 20, // Align with the QR code icon
       alignItems: "flex-start", // Align text and arrow to the left
     },
     qrReminderText: {
