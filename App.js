@@ -1439,7 +1439,7 @@ const App = () => {
         animationType="fade"
         onRequestClose={() => setIsQrVisible(false)} // Close the pop-up
       >
-        <View style={styles.qrModalContainer}>
+        <ScrollView contentContainerStyle={styles.qrModalContainer}>
           <View style={styles.qrModal}>
             <Text style={styles.qrModalText}>
               {language === "norwegian" ? "Skann QR-koden med kameraet for å åpne" : "Scan the QR code with the camera to open"}
@@ -1460,7 +1460,7 @@ const App = () => {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </ScrollView>
       </Modal>
 
       {/* Render the rest of the app */}
