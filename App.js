@@ -94,15 +94,15 @@ const storyData = {
       text: "Skal bare en kort tur til butikken. Du sitter i baksetet. Hva gjør du?",
       image: require('./assets/case1.png'),
       choices: [
-        { text: "Ta på beltet", next: "Case 1 Video Good" },
-        { text: "Ta ikke på beltet", next: "Case 1 Video Bad" },
+        { text: "Tar på beltet", next: "Case 1 Video Good" },
+        { text: "Tar ikke på beltet", next: "Case 1 Video Bad" },
       ],
     },
     "Case 1 Video Good": {
       video: require('./assets/case1_good.mp4'),
       explanation: (
         <Text>
-        Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
+        Det er smart å alltid bruke bilbelte – selv om du bare skal en kort tur til butikken. Bilen kan lett komme opp i 60 km/t på veien dit. Havner du i en kollisjon i den farten, kan kroppen din ha en kraft tilsvarende 1 tonn i kollisjonsøyeblikket. Hvordan tror du det går med vennen din i setet foran? Trykk på lenken under for å se dine krefter i ulike hastigheter.{"\n\n"} Et bilbelte kan være forskjellen på liv og død. Tar du sjansen?{"\n\n"}{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
@@ -120,7 +120,6 @@ const storyData = {
           >
             https://www.ungitrafikken.no/kollisjonskalkulator
           </Text>{' '}
-          og se hva dine krefter tilsvarer i en hastighet på 60 km/t. Vil du bruke bilbeltet? Du kan også bli straffet med forenklet forelegg i henhold til paragraf §1 (forskrift om bruk av bilbelte mv, 1979 §1).
         </Text>
       ),
       next: "Case 2",
@@ -129,7 +128,7 @@ const storyData = {
       video: require('./assets/case1_bad.mp4'),
       explanation: (
         <Text>
-          Godt valg! Det er hensiktsmessig å alltid bruke bilbelte, selv om du bare skal en kort tur til butikken vil bilen i på vei til butikken nå en hastighet på 60 kilometer i timen. Dersom du havner i en kollisjon vil din kroppsvekt tilsvare 1,2 tonn i krefter ved kollisonsøyblikket, hvordan tror du det går med vennen din i passasjersete foran? Gå selv inn på{' '}
+        Det er smart å alltid bruke bilbelte – selv om du bare skal en kort tur til butikken. Bilen kan lett komme opp i 60 km/t på veien dit. Havner du i en kollisjon i den farten, kan kroppen din ha en kraft tilsvarende 1 tonn i kollisjonsøyeblikket. Hvordan tror du det går med vennen din i setet foran? Trykk på lenken under for å se dine krefter i ulike hastigheter.{"\n\n"} Et bilbelte kan være forskjellen på liv og død. Tar du sjansen?{"\n\n"}{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
@@ -147,7 +146,6 @@ const storyData = {
           >
             https://www.ungitrafikken.no/kollisjonskalkulator
           </Text>{' '}
-          og se hva dine krefter tilsvarer i en hastighet på 60 km/t. Vil du bruke bilbeltet? Du kan også bli straffet med forenklet forelegg i henhold til paragraf §1 (forskrift om bruk av bilbelte mv, 1979 §1).
         </Text>
       ),
       next: "Case 2",
@@ -164,11 +162,11 @@ const storyData = {
       video: require('./assets/case2_good.mp4'),
       explanation: (
         <Text>
-          Ved rygging har ryggende vikeplikt for annen trafikk i henhold til trafikkreglene, (trafikkreglene, 1996, §11). Til tross for dette kan det ifølge grunnregelen vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3) være hensiktsmessig å slippe ut den røde bilen. Hva mener du kan være grunnen til dette? Se lenke:{' '}
+          Den som rygger eller vender, har vikeplikt for annen trafikant ifølge trafikkreglene §11 om rygging og vending. Selv om dette er tilfelle, kan det i henhold til vegtrafikklovens §3, som er hovedregelen for trafikk, være hensiktsmessig å slippe ut den røde bilen.{"\n\n"}Hva mener du kan være grunnen til dette?{"\n\n"}Vegtrafikkloven §3:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -178,7 +176,23 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
+          {"\n"} Trafikkregler §11:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A711#%C2%A711';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -188,11 +202,11 @@ const storyData = {
       video: require('./assets/case2_bad.mp4'),
       explanation: (
         <Text>
-          Ved rygging har ryggende vikeplikt for annen trafikk i henhold til trafikkreglene, (trafikkreglene, 1996, §11). Å ikke slippe ut den røde bilen kan føre til unødvendige konflikter eller farlige situasjoner. Hva kunne du gjort annerledes? Se lenke:{' '}
+          Den som rygger eller vender, har vikeplikt for annen trafikant ifølge trafikkreglene §11 om rygging og vending. Selv om dette er tilfelle, kan det i henhold til vegtrafikklovens §3, som er hovedregelen for trafikk, være hensiktsmessig å slippe ut den røde bilen.{"\n\n"}Hva mener du kan være grunnen til dette?{"\n\n"}Vegtrafikkloven §3:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -202,7 +216,23 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
+          {"\n"} Trafikkregler §11:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A711#%C2%A711';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -220,11 +250,11 @@ const storyData = {
       video: require('./assets/case3_good.mp4'),
       explanation: (
         <Text>
-          Ifølge trafikreglenes § 13.Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss (trafikkregler, 1986, §13). Se lenke:{' '}
+          Ifølge trafikreglenes § 13. Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss. {"\n\n"}Hva mener du kan være grunnen til dette?{"\n\n"}Trafikkregler §13:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A713#%C2%A713';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -234,7 +264,7 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -244,11 +274,11 @@ const storyData = {
       video: require('./assets/case3_bad.mp4'),
       explanation: (
         <Text>
-          Ifølge trafikreglenes § 13.Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss (trafikkregler, 1986, §13). Se lenke:{' '}
+          Ifølge trafikreglenes § 13. Særlige bestemmelser om kjørefarten, står det at «kjørende må kunne stanse på den vegstrekning som den kjørende har oversikt over, og foran enhver påregnelig hindring». I tillegg står det at kjørende plikter å holde tilstrekkelig lav fart ved passering av blant annet buss. {"\n\n"}Hva mener du kan være grunnen til dette?{"\n\n"}Trafikkregler §13:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A713#%C2%A713';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -258,14 +288,14 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
       next: "Case 4",
     },
     "Case 4": {
-      text: "Du kjører den røde bilen (grønn ring) og oppdager en bil i ett kryss (rød sirkel). Hva gjør du?",
+      text: "Du kjører den røde bilen (grønn ring) og oppdager en bil i ett kryss (rød ring). Hva gjør du?",
       image: require('./assets/case4.png'),
       choices: [
         { text: "Jeg slipper gasspedalen og lar bilen passere", next: "Case 4 Video Good" },
@@ -276,11 +306,11 @@ const storyData = {
       video: require('./assets/case4_good.mp4'),
       explanation: (
         <Text>
-          I følge trafikkreglenes §7 om vikeplikt har du i dette tilfelle vikeplikt da den svarte bilen kommer fra din høyre side så det sikreste valget blir i dette tilfelle å senke farten og la bilen passere. I tillegg står det i trafikkreglene at den som har vikeplikt skal vise dette tydelig og i god tid ved å senke farten eller stanse (trafikkregler, 1986, §7). Les mer på lovdata om §7:{' '}
+          Ifølge trafikkreglenes §7 om vikeplikt, har du i dette tilfellet vikeplikt ettersom den svarte bilen kommer fra din høyre side. Videre står det i trafikkreglene at den som har vikeplikt, skal tydelig vise dette ved i god tid å sette ned farten eller stanse.{"\n\n"}Hva kunne vært konsekvensene dersom den svarte bilen hadde kjørt for fort?{"\n\n"}Trafikkregler §7:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A77#%C2%A77';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -290,9 +320,8 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
-          {' '}Hva kunne konsekvensene ha vært dersom den svarte bilen hadde hatt for høy fart?
         </Text>
       ),
       next: "Case 5",
@@ -301,11 +330,11 @@ const storyData = {
       video: require('./assets/case4_bad.mp4'),
       explanation: (
         <Text>
-          I følge trafikkreglenes §7 om vikeplikt har du i dette tilfelle vikeplikt da den svarte bilen kommer fra din høyre side så det sikreste valget blir i dette tilfelle å senke farten og la bilen passere. I tillegg står det i trafikkreglene at den som har vikeplikt skal vise dette tydelig og i god tid ved å senke farten eller stanse (trafikkregler, 1986, §7). Les mer på lovdata om §7:{' '}
+          Ifølge trafikkreglenes §7 om vikeplikt, har du i dette tilfellet vikeplikt ettersom den svarte bilen kommer fra din høyre side. Videre står det i trafikkreglene at den som har vikeplikt, skal tydelig vise dette ved i god tid å sette ned farten eller stanse.{"\n\n"}Hva kunne vært konsekvensene dersom den svarte bilen hadde kjørt for fort?{"\n\n"}Trafikkregler §7:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A77#%C2%A77';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -315,15 +344,14 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
-          {' '}Hva kunne konsekvensene ha vært dersom den svarte bilen hadde hatt for høy fart?
         </Text>
       ),
       next: "Case 5",
     },
     "Case 5": {
-      text: "Du kommer kjørende (grønn ring) og oppdager en fotgjenger (rød ring) et stykke unna ved et gangfelt. Hva gjør du?",
+      text: "Du kommer kjørende (grønn ring) og oppdager en fotgjenger (rød ring) et stykke unna et gangfelt. Hva gjør du?",
       image: require('./assets/case5.png'),
       choices: [
         { text: "Jeg senker farten", next: "Case 5 Video Good" },
@@ -334,11 +362,11 @@ const storyData = {
       video: require('./assets/case5_good.mp4'),
       explanation: (
         <Text>
-          I følge § 9. «Særlige plikter overfor gående» har kjørende vikeplikt for gående som er på vei ut i gangfeltet (trafikkregler, 1986, §9). Til tross for at føreren ikke kan vite med sikkerhet om den gående skal krysse veien, har dessuten ikke bilføreren lov til å stanse i gangfeltet eller forstyrre den gående slik det kan oppfattes hvis farten ikke tidlig reduseres. Les mer på lovdata om §9:{' '}
+          I følge trafikkreglenes § 9 «Særlige plikter overfor gående», har kjørende vikeplikt for gående som er i ferd med å gå ut i gangfeltet. Selv om føreren ikke kan vite med sikkerhet om den gående skal krysse veien, skal vilføreren unngå stans på gangfelt eller på annen måte forstyrre den gående. Dette kan oppfattes som en forstyrrelse dersom farten ikke reduseres i god tid.{"\n\n"}Hva kunne konsekvensene vært dersom den gående gikk uten å sjekke, og du beholdt farten?{"\n\n"}Trafikkregler §9:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A79#%C2%A79';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -348,7 +376,7 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -358,11 +386,11 @@ const storyData = {
       video: require('./assets/case5_bad.mp4'),
       explanation: (
         <Text>
-          I følge § 9. «Særlige plikter overfor gående» har kjørende vikeplikt for gående som er på vei ut i gangfeltet (trafikkregler, 1986, §9). Til tross for at føreren ikke kan vite med sikkerhet om den gående skal krysse veien, har dessuten ikke bilføreren lov til å stanse i gangfeltet eller forstyrre den gående slik det kan oppfattes hvis farten ikke tidlig reduseres. Les mer på lovdata om §9:{' '}
+          I følge trafikkreglenes § 9 «Særlige plikter overfor gående», har kjørende vikeplikt for gående som er i ferd med å gå ut i gangfeltet. Selv om føreren ikke kan vite med sikkerhet om den gående skal krysse veien, skal vilføreren unngå stans på gangfelt eller på annen måte forstyrre den gående. Dette kan oppfattes som en forstyrrelse dersom farten ikke reduseres i god tid.{"\n\n"}Hva kunne konsekvensene vært dersom den gående gikk uten å sjekke, og du beholdt farten?{"\n\n"}Trafikkregler §9:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A79#%C2%A79';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -372,7 +400,7 @@ const storyData = {
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -390,7 +418,22 @@ const storyData = {
       video: require('./assets/case6_good.mp4'),
       explanation: (
         <Text>
-          I henhold til §3 grunnreglene for trafikk kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+          I henhold til vegtrafikklovens §3 "grunnregler for trafikk" kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.{"\n\n"}Hvilke konsekvenser kan oppstå hvis jeg bruker mobilen i trafikken?{"\n\n"}Vegtrafikkloven §3:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
         </Text>
       ),
       next: "Case 7",
@@ -399,7 +442,22 @@ const storyData = {
       video: require('./assets/case6_bad.mp4'),
       explanation: (
         <Text>
-          I henhold til §3 grunnreglene for trafikk kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.
+          I henhold til vegtrafikklovens §3 "grunnregler for trafikk" kan det være hensiktsmessig å se seg godt for og vente med å bruke mobiltelefonen til man har krysset område der det forventes trafikk. På lik linje bør også bilføreren forvente at gående kan være distraherte.{"\n\n"}Hvilke konsekvenser kan oppstå hvis jeg bruker mobilen i trafikken?{"\n\n"}Vegtrafikkloven §3:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
         </Text>
       ),
       next: "Case 7",
@@ -414,12 +472,20 @@ const storyData = {
     },
     "Case 7 Video Good": {
       video: require('./assets/case7_good.mp4'),
-      explanation: "Det kan være hensiktsmessig å rygge inn på parkeringsplasser. En får bedre oversikt på vei ut når man skal kjøre ut i trafikken igjen, dessuten er det mindre trafikk der du skal rygge når en rygger inn. ",
+      explanation: (
+        <Text>
+          Ryggeparkering gir bedre sikt når du skal forlate parkeringsplassen, da du har bedre oversikt over trafikken rundt deg. Hvis du parkerer med fronten inn, kan sikten bli begrenset når du skal rygge ut, noe som kan gjøre det vanskeligere å se farer og skape farlige situasjoner.{"\n\n"}Hvordan kan ditt valg av parkering gjøre trafikkmiljøet tryggere?
+        </Text>
+      ),
       next: "Case 8",
     },
     "Case 7 Video Bad": {
       video: require('./assets/case7_bad.mp4'),
-      explanation: "Det kan være hensiktsmessig å rygge inn på parkeringsplasser. En får bedre oversikt på vei ut når man skal kjøre ut i trafikken igjen, dessuten er det mindre trafikk der du skal rygge når en rygger inn. ",
+      explanation: (
+        <Text>
+          Ryggeparkering gir bedre sikt når du skal forlate parkeringsplassen, da du har bedre oversikt over trafikken rundt deg. Hvis du parkerer med fronten inn, kan sikten bli begrenset når du skal rygge ut, noe som kan gjøre det vanskeligere å se farer og skape farlige situasjoner.{"\n\n"}Hvordan kan ditt valg av parkering gjøre trafikkmiljøet tryggere?
+          </Text>
+      ),
       next: "Case 8",
     },
     "Case 8": {
@@ -434,14 +500,29 @@ const storyData = {
       video: require('./assets/case8_good.mp4'),
       explanation: (
         <Text>
-          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
+          Ifølge trafikkopplæringsforskriften §11-1. "Hovedmål for klasse B" står det at eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
           {"\n"}- trafikksikker
           {"\n"}- gir god samhandling
           {"\n"}- fører til god trafikkavvikling
           {"\n"}- tar hensyn til helse, miljø og andres behov
           {"\n"}- er i samsvar med gjeldende regelverk.
-          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
           {"\n\n"}Hvordan ønsker du å være som bilfører?
+          {"\n\n"}Trafikkopplæringsforskriften §11-1:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/2004-10-01-1339/KAPITTEL_11#KAPITTEL_11';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+            >
+            https://lovdata.no/forskrift/2004-10-01-1339
+          </Text>
         </Text>
       ),
       next: "end",
@@ -450,14 +531,29 @@ const storyData = {
       video: require('./assets/case8_bad.mp4'),
       explanation: (
         <Text>
-          Ifølge trafikkopplæringsforskriften §11-1. Hovedmål for klasse B skal eleven kunne kjøre bil på en ansvarlig måte. Dessuten står det at «Eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
+          Ifølge trafikkopplæringsforskriften §11-1. "Hovedmål for klasse B" står det at eleven skal ha de kunnskaper og ferdigheter, den selvinnsikt og risikoforståelse, som er nødvendig for å kjøre på en måte som er:
           {"\n"}- trafikksikker
           {"\n"}- gir god samhandling
           {"\n"}- fører til god trafikkavvikling
           {"\n"}- tar hensyn til helse, miljø og andres behov
           {"\n"}- er i samsvar med gjeldende regelverk.
-          {"\n"}(trafikkopplæringsforskriften, 2004, §11-1.)
           {"\n\n"}Hvordan ønsker du å være som bilfører?
+          {"\n\n"}Trafikkopplæringsforskriften §11-1:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/2004-10-01-1339/KAPITTEL_11#KAPITTEL_11';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+            >
+            https://lovdata.no/forskrift/2004-10-01-1339
+          </Text>
         </Text>
       ),
       next: "end",
@@ -469,7 +565,7 @@ const storyData = {
       info: (
         <Text>
           This is an interactive game where you make choices in various traffic situations. Your choices affect the story and determine how it ends.{"\n\n"}
-          <Text style={{ fontWeight: "bold", color: "#333" }}>
+          <Text style={{ fontWeight: "bold"}}>
             User Guide:
           </Text>{" "}
           <Text>
@@ -508,23 +604,23 @@ const storyData = {
       video: require('./assets/case1_good.mp4'),
       explanation: (
         <Text>
-It is always advisable to wear a seatbelt. Even if you're just going on a short trip to the store, the car will reach a speed of 60 kilometers per hour. If you get into a collision, your body weight will correspond to 1.2 tons of force at the moment of impact. How do you think it will affect your friend in the front passenger seat? Visit{' '}
-<Text
-  style={{ color: 'blue', textDecorationLine: 'underline' }}
-  onPress={() => {
-    const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
-    if (Platform.OS === 'web') {
-      window.open(url, '_blank');
-    } else {
-      Linking.openURL(url).catch((err) =>
-        console.error("Failed to open URL:", err)
-      );
-    }
-  }}
->
-  https://www.ungitrafikken.no/kollisjonskalkulator
-</Text>{' '}
-to see what your forces correspond to at a speed of 60 km/h. Would you wear a seatbelt? You can also be fined with a simplified penalty according to §1 (Regulations on the use of seatbelts, 1979 §1).        </Text>
+        It’s smart to always wear a seatbelt – even if you're just going on a short trip to the store. The car can easily reach 60 km/h on the way there. If you're in a collision at that speed, your body can experience a force equivalent to 1 ton at the moment of impact. How do you think it will go for your friend in the front seat? Click the link below to see the forces you experience at different speeds.{"\n\n"}A seatbelt could be the difference between life and death. Will you take the chance?{"\n\n"}{' '}
+        <Text
+          style={{ color: 'blue', textDecorationLine: 'underline' }}
+          onPress={() => {
+            const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+            if (Platform.OS === 'web') {
+              window.open(url, '_blank');
+              } else {
+              Linking.openURL(url).catch((err) =>
+                console.error("Failed to open URL:", err)
+            );
+          }
+        }}
+      >
+        https://www.ungitrafikken.no/kollisjonskalkulator
+      </Text>{' '}
+     </Text>
       ),
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
@@ -532,23 +628,23 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case1_bad.mp4'),
       explanation: (
         <Text>
-It is always advisable to wear a seatbelt. Even if you're just going on a short trip to the store, the car will reach a speed of 60 kilometers per hour. If you get into a collision, your body weight will correspond to 1.2 tons of force at the moment of impact. How do you think it will affect your friend in the front passenger seat? Visit{' '}
-<Text
-  style={{ color: 'blue', textDecorationLine: 'underline' }}
-  onPress={() => {
-    const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
-    if (Platform.OS === 'web') {
-      window.open(url, '_blank');
-    } else {
-      Linking.openURL(url).catch((err) =>
-        console.error("Failed to open URL:", err)
-      );
-    }
-  }}
->
-  https://www.ungitrafikken.no/kollisjonskalkulator
-</Text>{' '}
-to see what your forces correspond to at a speed of 60 km/h. Would you wear a seatbelt? You can also be fined with a simplified penalty according to §1 (Regulations on the use of seatbelts, 1979 §1).        </Text>
+        It’s smart to always wear a seatbelt – even if you're just going on a short trip to the store. The car can easily reach 60 km/h on the way there. If you're in a collision at that speed, your body can experience a force equivalent to 1 ton at the moment of impact. How do you think it will go for your friend in the front seat? Click the link below to see the forces you experience at different speeds.{"\n\n"}A seatbelt could be the difference between life and death. Will you take the chance?{"\n\n"}{' '}
+          <Text
+          style={{ color: 'blue', textDecorationLine: 'underline' }}
+          onPress={() => {
+            const url = 'https://www.ungitrafikken.no/kollisjonskalkulator';
+            if (Platform.OS === 'web') {
+              window.open(url, '_blank');
+              } else {
+              Linking.openURL(url).catch((err) =>
+                console.error("Failed to open URL:", err)
+            );
+          }
+        }}
+      >
+        https://www.ungitrafikken.no/kollisjonskalkulator
+      </Text>{' '}
+     </Text>
       ),
       next: "Case 2", // Skip explanation and go directly to Case 2
     },
@@ -564,11 +660,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case2_good.mp4'),
       explanation: (
         <Text>
-          When reversing, the reversing vehicle must yield to other traffic according to traffic rules (trafikkreglene, 1996, §11). Despite this, according to the general rule in vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3), it may be appropriate to let the red car out. What do you think could be the reason for this? See link:{' '}
+          The person who is reversing or turning has a duty to yield to other road users according to Section 11 of the Traffic Regulations on reversing and turning. Even though this is the case, it may, in accordance with Section 3 of the Road Traffic Act – which is the fundamental rule of traffic – be appropriate to let the red car out.{"\n\n"}What do you think could be the reason for this?{"\n\n"}The Road Traffic Act:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              const url = 'https://lovdata.no/lov/1965-06-18-4';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -578,7 +674,23 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
+          {"\n"} Trafic Regulations:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -588,11 +700,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case2_bad.mp4'),
       explanation: (
         <Text>
-          When reversing, the reversing vehicle must yield to other traffic according to traffic rules (trafikkreglene, 1996, §11). Despite this, according to the general rule in vegtrafikkloven §3 (grunnregler for trafikk, 1991, §3), it may be appropriate to let the red car out. What do you think could be the reason for this? See link:{' '}
+          The person who is reversing or turning has a duty to yield to other road users according to Section 11 of the Traffic Regulations on reversing and turning. Even though this is the case, it may, in accordance with Section 3 of the Road Traffic Act – which is the fundamental rule of traffic – be appropriate to let the red car out.{"\n\n"}What do you think could be the reason for this?{"\n\n"}The Road Traffic Act:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4';
+              const url = 'https://lovdata.no/lov/1965-06-18-4';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -602,7 +714,23 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/NL/lov/1965-06-18-4
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
+          {"\n"} Trafic Regulations:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/forskrift/1986-03-21-747';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -620,11 +748,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case3_good.mp4'),
       explanation: (
         <Text>
-          According to Traffic Rules § 13.Special provisions on driving speed, it states that "drivers must be able to stop within the distance they can see ahead and in front of any foreseeable obstacle." Additionally, drivers are required to maintain sufficiently low speed when passing, among other things, buses (Traffic Rules, 1986, §13). See link:{' '}
+          According to traffic regulation § 13. Special provisions on driving speed, it states that "drivers must be able to stop within the stretch of road they can see, and in front of any foreseeable obstacle." In addition, it states that drivers are obliged to maintain a sufficiently low speed when passing, among other things, a bus. {"\n\n"}What do you think could be the reason for this?{"\n\n"}Traffic regulations §13:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A713#%C2%A713';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -634,7 +762,7 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -644,11 +772,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case3_bad.mp4'),
       explanation: (
         <Text>
-          According to Traffic Rules § 13.Special provisions on driving speed, it states that "drivers must be able to stop within the distance they can see ahead and in front of any foreseeable obstacle." Additionally, drivers are required to maintain sufficiently low speed when passing, among other things, buses (Traffic Rules, 1986, §13). See link:{' '}
+          According to traffic regulation § 13. Special provisions on driving speed, it states that "drivers must be able to stop within the stretch of road they can see, and in front of any foreseeable obstacle." In addition, it states that drivers are obliged to maintain a sufficiently low speed when passing, among other things, a bus. {"\n\n"}What do you think could be the reason for this?{"\n\n"}Traffic regulations §13:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A713#%C2%A713';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -658,7 +786,7 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -700,11 +828,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case4_good.mp4'),
       explanation: (
         <Text>
-          According to Traffic Rules §7 on the right of way, in this case, you must yield as the black car is coming from your right side. The safest choice in this situation is to slow down and let the car pass. Additionally, the traffic rules state that the person who must yield should show this clearly and in good time by slowing down or stopping (Traffic Rules, 1986, §7). Read more on Lovdata about §7:{' '}
+          According to traffic regulation §7 on the right of way, you are required to yield in this case, as the black car is coming from your right side. Furthermore, the traffic regulations state that the person who must yield should clearly show this by reducing speed or stopping well in advance.{"\n\n"}What could have been the consequences if the black car had been driving too fast?{"\n\n"}Traffic regulations §7:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A77#%C2%A77';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -714,9 +842,8 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
-          {' '}What could have been the consequences if the black car had been driving too fast?
         </Text>
       ),
       next: "Case 5",
@@ -725,11 +852,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case4_bad.mp4'),
       explanation: (
         <Text>
-          According to Traffic Rules §7 on the right of way, in this case, you must yield as the black car is coming from your right side. The safest choice in this situation is to slow down and let the car pass. Additionally, the traffic rules state that the person who must yield should show this clearly and in good time by slowing down or stopping (Traffic Rules, 1986, §7). Read more on Lovdata about §7:{' '}
+          According to traffic regulation §7 on the right of way, you are required to yield in this case, as the black car is coming from your right side. Furthermore, the traffic regulations state that the person who must yield should clearly show this by reducing speed or stopping well in advance.{"\n\n"}What could have been the consequences if the black car had been driving too fast?{"\n\n"}Traffic regulations §7:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A77#%C2%A77';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -739,9 +866,8 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
-          {' '}What could have been the consequences if the black car had been driving too fast?
         </Text>
       ),
       next: "Case 5",
@@ -758,11 +884,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case5_good.mp4'),
       explanation: (
         <Text>
-          According to § 9. "Special duties towards pedestrians," drivers must yield to pedestrians who are about to enter a crosswalk (Traffic Rules, 1986, §9). Even though the driver cannot know for certain if the pedestrian intends to cross, the driver is also not allowed to stop in the crosswalk or disturb the pedestrian, which may be perceived if the speed is not reduced early. Read more on Lovdata about §9:{' '}
+          According to traffic regulation § 9 "Special duties toward pedestrians", drivers must yield to pedestrians who are about to enter a pedestrian crossing. Even if the driver cannot be certain that the pedestrian intends to cross the road, the driver must avoid stopping on the crossing or otherwise disturbing the pedestrian. This may be perceived as a disturbance if the speed is not reduced in good time.{"\n\n"}What could have been the consequences if the pedestrian stepped out without checking, and you maintained your speed?{"\n\n"}Traffic regulations §9:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A79#%C2%A79';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -772,7 +898,7 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -782,11 +908,11 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case5_bad.mp4'),
       explanation: (
         <Text>
-          According to § 9. "Special duties towards pedestrians," drivers must yield to pedestrians who are about to enter a crosswalk (Traffic Rules, 1986, §9). Even though the driver cannot know for certain if the pedestrian intends to cross, the driver is also not allowed to stop in the crosswalk or disturb the pedestrian, which may be perceived if the speed is not reduced early. Read more on Lovdata about §9:{' '}
+          According to traffic regulation § 9 "Special duties toward pedestrians", drivers must yield to pedestrians who are about to enter a pedestrian crossing. Even if the driver cannot be certain that the pedestrian intends to cross the road, the driver must avoid stopping on the crossing or otherwise disturbing the pedestrian. This may be perceived as a disturbance if the speed is not reduced in good time.{"\n\n"}What could have been the consequences if the pedestrian stepped out without checking, and you maintained your speed?{"\n\n"}Traffic regulations §9:{' '}
           <Text
             style={{ color: 'blue', textDecorationLine: 'underline' }}
             onPress={() => {
-              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747';
+              const url = 'https://lovdata.no/dokument/SF/forskrift/1986-03-21-747/%C2%A79#%C2%A79';
               if (Platform.OS === 'web') {
                 window.open(url, '_blank');
               } else {
@@ -796,7 +922,7 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
               }
             }}
           >
-            https://lovdata.no/dokument/SF/forskrift/1986-03-21-747
+            https://lovdata.no/forskrift/1986-03-21-747
           </Text>
         </Text>
       ),
@@ -814,7 +940,22 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case6_good.mp4'),
       explanation: (
         <Text>
-          According to §3 general traffic rules, it is wise to look carefully and wait to use your mobile phone until you have crossed areas where traffic is expected. Similarly, drivers should also expect that pedestrians may be distracted.
+          According to the Road Traffic Act §3 "General traffic rules," it may be advisable to look carefully and wait to use a mobile phone until you have crossed areas where traffic is expected. Similarly, the driver should also expect that pedestrians may be distracted. {"\n\n"}What consequences could arise if I use my mobile phone in traffic?{"\n\n"}Road Traffic Act §3:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
         </Text>
       ),
       next: "Case 7",
@@ -823,7 +964,22 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
       video: require('./assets/case6_bad.mp4'),
       explanation: (
         <Text>
-          According to §3 general traffic rules, it is wise to look carefully and wait to use your mobile phone until you have crossed areas where traffic is expected. Similarly, drivers should also expect that pedestrians may be distracted.
+          According to the Road Traffic Act §3 "General traffic rules," it may be advisable to look carefully and wait to use a mobile phone until you have crossed areas where traffic is expected. Similarly, the driver should also expect that pedestrians may be distracted. {"\n\n"}What consequences could arise if I use my mobile phone in traffic?{"\n\n"}Road Traffic Act §3:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/NL/lov/1965-06-18-4/KAPITTEL_2#%C2%A73';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+          >
+            https://lovdata.no/lov/1965-06-18-4
+          </Text>
         </Text>
       ),
       next: "Case 7",
@@ -878,12 +1034,64 @@ to see what your forces correspond to at a speed of 60 km/h. Would you wear a se
     },
     "Case 8 Video Good": {
       video: require('./assets/case8_good.mp4'),
-      explanation: "It can be practical to reverse into parking spaces. You get a better view when driving out into traffic again, and there is also less traffic in the area where you're reversing when you back in.",
+      explanation: (
+        <Text>
+          According to the Traffic Training Regulations §11-1, "Main objectives for category B", it states that the student shall have the knowledge and skills, the self-awareness and risk understanding necessary to drive in a manner that is:
+          {"\n"}- traffic safe
+          {"\n"}- promotes good interaction
+          {"\n"}- ensures efficient traffic flow
+          {"\n"}- takes into account health, the environment, and the needs of others
+          {"\n"}- complies with applicable regulations.
+          {"\n\n"}How do you want to be as a driver?
+          {"\n\n"}Traffic Training Regulations §11-1:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/2004-10-01-1339/KAPITTEL_11#KAPITTEL_11';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+            >
+            https://lovdata.no/forskrift/2004-10-01-1339
+          </Text>
+        </Text>
+      ),
       next: "end", // Leads to the end
     },
     "Case 8 Video Bad": {
       video: require('./assets/case8_bad.mp4'),
-      explanation: "It can be practical to reverse into parking spaces. You get a better view when driving out into traffic again, and there is also less traffic in the area where you're reversing when you back in.",
+      explanation: (
+        <Text>
+          According to the Traffic Training Regulations §11-1, "Main objectives for category B", it states that the student shall have the knowledge and skills, the self-awareness and risk understanding necessary to drive in a manner that is:
+          {"\n"}- traffic safe
+          {"\n"}- promotes good interaction
+          {"\n"}- ensures efficient traffic flow
+          {"\n"}- takes into account health, the environment, and the needs of others
+          {"\n"}- complies with applicable regulations.
+          {"\n\n"}How do you want to be as a driver?
+          {"\n\n"}Traffic Training Regulations §11-1:{' '}
+          <Text
+            style={{ color: 'blue', textDecorationLine: 'underline' }}
+            onPress={() => {
+              const url = 'https://lovdata.no/dokument/SF/forskrift/2004-10-01-1339/KAPITTEL_11#KAPITTEL_11';
+              if (Platform.OS === 'web') {
+                window.open(url, '_blank');
+              } else {
+                Linking.openURL(url).catch((err) =>
+                  console.error("Failed to open URL:", err)
+                );
+              }
+            }}
+            >
+            https://lovdata.no/forskrift/2004-10-01-1339
+          </Text>
+        </Text>
+      ),
       next: "end", // Leads to the end
     },
   },
