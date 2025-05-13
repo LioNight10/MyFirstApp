@@ -67,8 +67,7 @@ const storyData = {
             Brukerveiledning:
           </Text>{" "}
           <Text>
-            For at spillet skal gi mening er det viktig at du svarer ærlig. Trykk på valgalternativet du ville ha gjort. Etter videoen er ferdig, kommer det informasjon om casen. Det anbefales å spille spillet to ganger; andre gangen velger du motsatt påstand av første gang. Ønsker du kun å se på en case av gangen? Trykk på knappen «casene».{"\n\n"}          </Text>
-          Lykke til!
+            For at spillet skal gi mening er det viktig at du svarer ærlig. Trykk på valgalternativet du ville ha gjort. Etter videoen er ferdig, kommer det informasjon om casen. Det anbefales å spille spillet to ganger; andre gangen velger du motsatt påstand av første gang. Ønsker du kun å se på en case av gangen? Trykk på knappen «casene».{"\n\n"}</Text>Lykke til!
         </Text>
       ),
       choices: [
